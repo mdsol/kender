@@ -1,7 +1,21 @@
 # Kender
 
-Kender provides general tasks for the Continuous Integration system.
-The goal is to be project and CI agnostic.
+Kender is a library of rake tasks that provides a consistent framework for
+continuous integration (CI). The principles of Kender are:
+
+* CI runs are executed the same way by everyone. Developers should be able to
+  execute the same, simple command on their machines to perform a CI run as is
+  used on a dedicated CI server. No more publishing a branch unsure of whether
+  the CI server will pass or fail.
+
+* CI runs are executed the same way on every branch. A single CI project
+  configuration should be suitable for every branch. No more mysterious failures
+  on the CI server due to prospective test tool changes being incompatible with
+  the current CI project configuration.
+
+* CI run results are visible directly where they are required. No more merging a
+  pull request in GitHub without being aware the branch is not passing on the CI
+  server.
 
 ## Usage
 
@@ -59,7 +73,7 @@ Run the following command to see the new tasks:
 [bundle exec] rake -D ci
 ```
 
-### Running locally
+### Performing a CI run
 
 The rake `ci` task can be run locally in precisely the same way as it should be
 on a CI server:
