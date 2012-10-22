@@ -98,9 +98,16 @@ application is already configured, execute just the `ci:run` task.
 
 ### Setting commit status in GitHub
 
-The `ci` task will update the current `HEAD` commit in the associated GitHub
-repo. To do so, a [GitHub OAuth][go] authorization token is required and must be
-provided in the `GITHUB_AUTH_TOKEN` environment variable, for example:
+The `ci` task sets the status of the current `HEAD` commit in the associated
+GitHub repository. If this commit represents a topic (feature) branch, any
+associated pull request will show the status of the CI run.
+
+The GitHub repository is determined by examining the `origin` remote of the
+current git repository.
+
+To set the commit status, a [GitHub OAuth][go] authorization token is required
+and must be provided in the `GITHUB_AUTH_TOKEN` environment variable, for
+example:
 
 ```
 [bundle exec] rake GITHUB_AUTH_TOKEN=123... ci
@@ -109,8 +116,7 @@ provided in the `GITHUB_AUTH_TOKEN` environment variable, for example:
 [go]: http://developer.github.com/v3/oauth/
 
 CI servers like Jenkins let you set system-wide environment variables, saving
-the need of specifying this in every job. The status update is skipped if no
-token is provided.
+the need of specifying this in every job.
 
 Create an authorization token with the following command:
 
