@@ -33,10 +33,10 @@ so these must be included in your `Gemfile` too. Specify versions appropriate
 for your project; the examples versions shown above are just for illustration.
 
 [s]: https://github.com/mdsol/shamus
-[b]: TODO
+[b]: http://brakemanscanner.org/
 
-This gem and it's dependencies should not be deployed in production, so scope
-them to appropriate stages as shown above.
+This gem and it's dependencies should not be deployed in production, hence the
+`group` above.
 
 Kender assumes that you have the following rake tasks defined locally in your
 project:
