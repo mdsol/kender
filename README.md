@@ -10,12 +10,11 @@ continuous integration (CI). The principles of Kender are:
 
 * CI runs are executed the same way on every branch. A single CI project
   configuration should be suitable for every branch. No more mysterious failures
-  on the CI server due to prospective test tool changes being incompatible with
-  the current CI project configuration.
+  on the CI server due to branch changes being incompatible with the current CI
+  project configuration.
 
-* CI run results are visible directly where they are required. No more merging a
-  pull request in GitHub without being aware the branch is not passing on the CI
-  server.
+* CI runs have directly visible status, e.g. in the GitHub pulls requests. No
+  more merging bad branches.
 
 ## Usage
 
