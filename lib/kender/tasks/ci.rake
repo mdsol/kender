@@ -7,8 +7,11 @@ task :ci => ['ci:status:pending'] do
     Rake::Task["ci:config"].invoke
     Rake::Task["ci:run"].invoke
     Rake::Task["ci:status:success"].invoke
-  rescue
+  rescue Exception => e
     Rake::Task["ci:status:failure"].invoke
+
+    # Ensure that this task still fails.
+    raise e
   ensure
     Rake::Task["ci:clean"].invoke
   end
