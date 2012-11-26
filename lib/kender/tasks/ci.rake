@@ -32,7 +32,13 @@ namespace :ci do
   task :clean => ['ci:env', 'db:drop']
 
   task :env do
-    ENV['RAILS_ENV'] ||= 'test'
+    if defined?(Rails)
+      # Default to the 'test' environment unless otherwise specified. This
+      # ensures that 'db:*' tasks are run on the correct (default) database for
+      # later tasks like 'spec'.
+      ENV['RAILS_ENV'] ||= 'test'
+      Rails.env = ENV['RAILS_ENV']
+    end
   end
 
   task :shamus do
