@@ -2,7 +2,8 @@ module Kender
   class Rspec < Command
 
     def initialize
-      @command = 'bundle exec rspec'
+      command = 'bundle exec rspec'
+      super(command)
     end
 
     # we run cucumber when we are not running Shamus

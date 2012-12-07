@@ -1,8 +1,10 @@
 module Kender
-
-
   # This class abstracts the shell commands we use
   class Command
+
+    def initialize(command)
+      @command = command
+    end
 
     def name 
       self.class.name.split("::").last.downcase.to_sym
@@ -18,13 +20,13 @@ module Kender
     end
 
     def execute
-      if !sh(@command).success?
+      if !run(@command).success?
         raise RuntimeError, "Command failed: #{@command}"
       end
     end
 
-    def sh(command)
-      system(command) #`#{command}`
+    def run(command)
+      system(command)
       $?
     end
 

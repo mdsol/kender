@@ -2,7 +2,8 @@ module Kender
   class Cucumber < Command
 
     def initialize
-      @command = 'bundle exec cucumber'
+      command = 'bundle exec cucumber'
+      super(command)
     end
 
     # we run cucumber when we are not running Shamus

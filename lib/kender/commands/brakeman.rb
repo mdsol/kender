@@ -3,7 +3,8 @@ module Kender
 
     def initialize
       # Make warnings fail the build with the '--exit-on-warn' switch.
-      @command = 'bundle exec brakeman --quiet --exit-on-warn'
+      command = 'bundle exec brakeman --quiet --exit-on-warn'
+      super(command)
     end
 
      def available?

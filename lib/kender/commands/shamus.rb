@@ -2,7 +2,8 @@ module Kender
   class Shamus < Command
 
     def initialize
-      @command = 'bundle exec shamus'
+      command = 'bundle exec shamus'
+      super(command)
     end
 
     # we only run shamus if the we are told so
