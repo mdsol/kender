@@ -39,6 +39,8 @@ namespace :ci do
       # later tasks like 'spec'.
       ENV['RAILS_ENV'] ||= 'test'
       Rails.env = ENV['RAILS_ENV']
+    else
+      ENV['RACK_ENV'] ||= 'test'
     end
   end
 

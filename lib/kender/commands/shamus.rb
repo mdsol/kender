@@ -10,6 +10,5 @@ module Kender
     def available?
       defined?(::Shamus) && ENV['VALIDATE_PROJECT']
     end
-
   end
 end
