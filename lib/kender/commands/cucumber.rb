@@ -8,7 +8,8 @@ module Kender
 
     # we run cucumber when we are not running Shamus
     def available?
-      defined?(::Cucumber) && !ENV['VALIDATE_PROJECT']
+      cucumber_files = File.join(Dir.pwd, 'features')
+      File.exists?(cucumber_files) && !ENV['VALIDATE_PROJECT']
     end
 
   end
