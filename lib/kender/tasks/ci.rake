@@ -1,5 +1,6 @@
 require 'kender/configuration'
 require 'kender/github'
+require 'kender/command'
 
 desc "Configure and run continuous integration tests then clean up"
 task :ci => ['ci:status:pending'] do
@@ -26,7 +27,7 @@ namespace :ci do
   task :config => ['ci:env', 'config:all', 'db:create', 'db:migrate']
 
   desc "Run continuous integration tests with the current configuration"
-  task :run => ['ci:env', 'ci:shamus', 'ci:brakeman']
+  task :run =>  ['ci:env'] + Kender::Command.all_tasks
 
   desc "Destroy resources created externally for the continuous integration run, e.g. drops databases"
   task :clean => ['ci:env', 'db:drop']
@@ -38,18 +39,17 @@ namespace :ci do
       # later tasks like 'spec'.
       ENV['RAILS_ENV'] ||= 'test'
       Rails.env = ENV['RAILS_ENV']
+    else
+      ENV['RACK_ENV'] ||= 'test'
     end
   end
 
-  task :shamus do
-    sh('bundle exec shamus')
+  Kender::Command.all.each do |command|
+    task command.name do 
+      command.execute
+    end
   end
-
-  task :brakeman do
-    # Make warnings fail the build with the '--exit-on-warn' switch.
-    sh('bundle exec brakeman --quiet --exit-on-warn')
-  end
-
+  
   namespace :status do
 
     config = Kender::Configuration.new
