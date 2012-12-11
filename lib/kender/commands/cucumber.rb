@@ -8,8 +8,10 @@ module Kender
 
     # we run cucumber when we are not running Shamus
     def available?
-      cucumber_files = File.join(Dir.pwd, 'features')
-      File.exists?(cucumber_files) && !ENV['VALIDATE_PROJECT']
+      #this is slow as bundle exec can prove to be quite slow in old rubies
+      return false if ENV['VALIDATE_PROJECT']
+      `bundle exec cucumber --version`
+      $?.success?
     end
 
   end
