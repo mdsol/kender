@@ -2,10 +2,6 @@ module Kender
   # This class abstracts the shell commands we use
   class Command
 
-    def initialize(command)
-      @command = command
-    end
-
     def name 
       self.class.name.split("::").last.downcase.to_sym
     end
@@ -25,11 +21,21 @@ module Kender
       end
     end
 
+    #TODO: system reload all the gems against, avoid this.
     def run(command)
       system(command)
       $?
     end
 
+    # I use this method insted of the more rubyist command= because it
+    # feels more explicit and obvious
+    def set_command(command)
+      @command = command
+    end
+
+    def available?
+      !@command.nil?
+    end
 
     class << self 
 
@@ -48,7 +54,7 @@ module Kender
       end
 
       def all
-        commands.map(&:new).select { |c| c.available? }
+        @all ||= commands.map(&:new).select { |c| c.setup && c.available? }
       end
 
     end
