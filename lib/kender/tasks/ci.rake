@@ -1,3 +1,6 @@
+#make sure we require all the tools we need loaded in memory
+Bundler.require(:default, :test)
+
 require 'kender/configuration'
 require 'kender/github'
 require 'kender/command'
@@ -24,13 +27,13 @@ namespace :ci do
   # Could depend on 'db:schema:load' or 'db:setup' here instead of 'db:migrate'
   # if the 'db/schema.rb' file was committed to the repo (as per Rails
   # recommendations).
-  task :config => ['ci:env', 'config:all', 'db:create', 'db:migrate']
+  task :config => ['ci:env', 'config:all', 'setup_db']
 
   desc "Run continuous integration tests with the current configuration"
   task :run =>  ['ci:env'] + Kender::Command.all_tasks
 
   desc "Destroy resources created externally for the continuous integration run, e.g. drops databases"
-  task :clean => ['ci:env', 'db:drop']
+  task :clean => ['ci:env', 'drop_db']
 
   task :env do
     if defined?(Rails)
@@ -49,6 +52,27 @@ namespace :ci do
       command.execute
     end
   end
+
+  task :setup_db do
+    if !defined?(ParallelTests)
+      Rake::Task['db:create'].invoke
+      Rake::Task['db:migrate'].invoke
+    else
+      #TODO: invoke on the task did not work. Why?
+      system('rake parallel:create')
+      system('rake parallel:prepare')
+    end
+  end
+
+  task :drop_db do
+    if !defined?(ParallelTests)
+      Rake::Task['db:drop'].invoke
+    else
+      #TODO: invoke on the task did not work. Why?
+      system('rake parallel:drop')
+    end
+  end
+
   
   namespace :status do
 
