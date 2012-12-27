@@ -61,7 +61,7 @@ module Kender
   end
 end
 
-require_relative 'commands/brakeman'
-require_relative 'commands/shamus'
-require_relative 'commands/cucumber'
-require_relative 'commands/rspec'
+require_relative 'commands/security'
+require_relative 'commands/validation'
+require_relative 'commands/features'
+require_relative 'commands/specs'
