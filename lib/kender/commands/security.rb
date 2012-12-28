@@ -1,9 +1,13 @@
 module Kender
   class Security < Command
 
-    def setup
-      if defined?(::Brakeman)
-        set_command( 'bundle exec brakeman --quiet --exit-on-warn')
+    def available?
+      defined?(::Brakeman)
+    end
+
+    def command
+      if available?
+        'bundle exec brakeman --quiet --exit-on-warn'
       end
     end
 

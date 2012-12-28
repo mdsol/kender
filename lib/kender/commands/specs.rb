@@ -1,24 +1,25 @@
 module Kender
   class Specs < Command
 
-    def setup
-      # When we run a validation command we assume any other command will not be run
-      return false if ENV['VALIDATE_PROJECT']
+    def available?
+      # TODO: consider creating a separate command for Test::Unit
+      (defined?(RSpec) or defined?(Test::Unit)) and not(ENV['VALIDATE_PROJECT'])
+    end
 
+    def command
       if defined?(ParallelTests)
         if defined?(RSpec)
-          set_command('rake parallel:spec')
-        elsif defined(Test::Unit)
-          set_command('rake parallel:test')
+          'rake parallel:spec'
+        elsif defined?(Test::Unit)
+          'rake parallel:test'
         end
       else
         if defined?(RSpec)
-          set_command('bundle exec rspec')
+          'bundle exec rspec'
         elsif defined?(Test::Unit)
-          set_command('rake test')
+          'rake test'
         end
       end
-
     end
 
   end

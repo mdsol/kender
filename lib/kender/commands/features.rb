@@ -1,15 +1,16 @@
 module Kender
   class Features < Command
 
-    def setup
-      # we run cucumber when we are not running Shamus
-      return false if ENV['VALIDATE_PROJECT']
-      
-      if defined?(Cucumber)
+    def available?
+      defined?(Cucumber) and not(ENV['VALIDATE_PROJECT'])
+    end
+
+    def command
+      if available?
         if defined?(ParallelTests)
-          set_command('rake parallel:features')
+          'rake parallel:features'
         else
-          set_command('bundle exec cucumber')
+          'bundle exec cucumber'
         end
       end
     end
