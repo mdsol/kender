@@ -2,7 +2,7 @@ module Kender
   class TestUnit < Command
 
     def available?
-      defined?(Test::Unit) and not(ENV['VALIDATE_PROJECT']
+      defined?(Test::Unit) and not(ENV['VALIDATE_PROJECT'])
     end
 
     def command
