@@ -52,6 +52,16 @@ module Kender
       end
 
     end
+
+    class Result
+      def initialize(result)
+        @result = result
+      end
+
+      def success?
+        return @result
+      end
+    end
   end
 end
 
@@ -59,3 +69,4 @@ require_relative 'commands/brakeman'
 require_relative 'commands/shamus'
 require_relative 'commands/cucumber'
 require_relative 'commands/rspec'
+require_relative 'commands/typemock'
