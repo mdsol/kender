@@ -6,6 +6,7 @@ desc "Configure and run continuous integration tests then clean up"
 task :ci => ['ci:status:pending'] do
   begin
     Rake::Task["ci:config"].invoke
+    Rake::Task["build"].invoke if Rake::Task.task_defined?("build")
     Rake::Task["ci:run"].invoke
     Rake::Task["ci:status:success"].invoke
   rescue Exception => e
