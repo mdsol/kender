@@ -19,7 +19,7 @@ module Kender
       p 'in run'
       success = true
       assemblies.each do |x|
-        runCmd = command + " /testcontainer:" + x
+        runCmd = command + " /testcontainer:" + x.inspect
         p runCmd
         system(runCmd)
         success = $?.success? if success
@@ -44,14 +44,14 @@ module Kender
       path = Dir[File.join(@@progFiles, "Microsoft Visual Studio " + (ENV['MSTEST_VERSION'] || '10.0'), \
         "**/mstest.exe")].first
 
-      path.inspect if File.exists? path
+      path.inspect if path and File.exists? path
     end
 
     def tmockrunner
       path = Dir[File.join(@@progFiles, "Typemock", "Isolator", (ENV['TMOCKRUNNER_VERSION'] || '6.1'), \
         "**/tmockrunner.exe")].first
 
-      path.inspect if File.exists? path
+      path.inspect if path and File.exists? path
     end
   end
 end
