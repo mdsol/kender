@@ -25,12 +25,14 @@ group :development, :test do
   gem 'kender', :git => 'git@github.com:mdsol/kender.git'
   gem 'shamus', :git => 'git@github.com:mdsol/shamus.git', :tag => '0.9.6'
   gem 'brakeman', '~> 1.8'
+  gem 'bundler-audit', '~> 0.1'
 end
 ```
 
-Kender currently assumes you are using the [Shamus][s] and [Brakeman][b] tools,
-so these must be included in your `Gemfile` too. Specify versions appropriate
-for your project; the examples versions shown above are just for illustration.
+Kender will only run Brakeman or Bundler-audit if you include them in
+the Gemfile, it is highly recommended to include them.
+Specify versions appropriate for your project; the examples versions shown 
+above are just for illustration.
 
 [s]: https://github.com/mdsol/shamus
 [b]: http://brakemanscanner.org/
