@@ -8,7 +8,7 @@ module Kender
     end
 
     def available?
-      defined?(::Bundle::Audit)
+      defined?(::Bundler::Audit)
     end
 
   end
