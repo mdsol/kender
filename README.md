@@ -29,12 +29,12 @@ group :development, :test do
 end
 ```
 
-Kender will only run Brakeman or Bundler-audit if you include them in
+Kender will only run [Brakeman][b] or [Bundler-audit][a] if you include them in
 the Gemfile, it is highly recommended to include them.
 Specify versions appropriate for your project; the examples versions shown 
 above are just for illustration.
 
-[s]: https://github.com/mdsol/shamus
+[a]: https://github.com/postmodern/bundler-audit
 [b]: http://brakemanscanner.org/
 
 This gem and it's dependencies should not be deployed in production, hence the
