@@ -55,6 +55,7 @@ module Kender
   end
 end
 
+require_relative 'commands/jasmine'
 require_relative 'commands/brakeman'
 require_relative 'commands/shamus'
 require_relative 'commands/cucumber'
