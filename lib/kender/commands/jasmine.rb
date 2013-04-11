@@ -1,4 +1,5 @@
 module Kender
+  # Jasmine is a unit testing framework for javascript similar to rspec.
   class Jasmine < Command
 
     def initialize
