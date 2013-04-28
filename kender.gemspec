@@ -10,7 +10,11 @@ Gem::Specification.new do |s|
   s.summary = 'Kender is a library of rake tasks that provides a consistent framework for continuous integration (CI).'
 
   s.files = Dir['lib/**/*']
-  s.test_files = Dir['spec/**/*']
+  s.test_files = Dir['features/**/*']
   s.executables = Dir['bin/*'].map{ |f| File.basename(f) }
   s.require_paths = ['lib']
+
+  s.add_development_dependency 'aruba', '~> 0.5.2'
+  s.add_development_dependency 'rake'
+  s.add_development_dependency 'pry'
 end
