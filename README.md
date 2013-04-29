@@ -98,6 +98,7 @@ Currently Kender execute the following software:
     gem 'cucumber'
   end
   ```
+
 * [Rspec][r]
   Add the following to your Gemfile to activate:
   ```ruby
@@ -105,6 +106,7 @@ Currently Kender execute the following software:
     gem 'rspec'
   end
   ```
+
 * [Jasmine][j]
   Add the following to your Gemfile to activate:
   ```ruby
@@ -112,7 +114,7 @@ Currently Kender execute the following software:
     gem 'jasmine'
   end
   ```
-  Additionally you need to have installed [PhantomJS][ph] in the systems which are running the tests.
+  Additionally you need to have installed [PhantomJS][ph] in the systems running the tests.
 
 * [Brakeman][b]
   Add the following to your Gemfile to activate:
