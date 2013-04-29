@@ -2,6 +2,16 @@ require 'kender/configuration'
 require 'kender/github'
 require 'kender/command'
 
+# Helper method to call rake tasks without blowing up when they do not exists
+# @Return: false when it could not be executed or there was some error.
+def run_successfully?(tasks)
+  [*tasks].inject(true) do |result, task|
+    result && if Rake::Task.task_defined?(task)
+      Rake::Task[task].invoke
+    end
+  end
+end
+
 # This is the task we want the user to use all the time.
 desc "Configure and run continuous integration tests then clean up"
 task :ci => ['ci:status:pending'] do
@@ -11,7 +21,6 @@ task :ci => ['ci:status:pending'] do
     Rake::Task["ci:status:success"].invoke
   rescue Exception => e
     Rake::Task["ci:status:failure"].invoke
-
     # Ensure that this task still fails.
     raise e
   ensure
@@ -46,24 +55,24 @@ namespace :ci do
   end
 
   task :config_project do
-    if defined?(DiceBag)
-      Rake::Task['config:all'].invoke
+    unless run_successfully?('config:all')
+      puts 'Your project could not be configured, a config:all task needed. Consider installing dice_bag'
     end
   end
+
 
   # TODO:  Could depend on 'db:schema:load' or 'db:setup' here instead of 'db:migrate'
   # if the 'db/schema.rb' file was committed to the repo (as per Rails
   # recommendations).
   task :setup_db do
-    if defined?(Rails)
-      Rake::Task['db:create'].invoke
-      Rake::Task['db:migrate'].invoke
+    unless run_successfully?(['db:create', 'db:migrate'])
+      puts 'The DB could not be set up. Define db:create and db:migrate for your test environment'
     end
   end
 
   task :drop_db do
-    if defined?(Rails)
-      Rake::Task['db:drop'].invoke
+    unless run_successfully?('db:drop')
+      puts 'The DB could not be torn down. Define db:drop in your test environment'
     end
   end
 
@@ -90,4 +99,3 @@ namespace :ci do
     end
   end
 end
-
