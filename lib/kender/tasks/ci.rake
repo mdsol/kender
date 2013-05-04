@@ -72,7 +72,7 @@ namespace :ci do
 
   task :drop_db do
     unless run_successfully?('db:drop')
-      puts 'The DB could not be torn down. Define db:drop in your test environment'
+      puts 'The DB could not be dropped. Define db:drop in your test environment'
     end
   end
 
