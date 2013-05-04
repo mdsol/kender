@@ -1,3 +1,6 @@
+# 0.1.4
+* bundler-audit support
+
 # 0.1.3
 * jasmine support
 
