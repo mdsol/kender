@@ -23,21 +23,10 @@ Add the following to your `Gemfile`:
 ```ruby
 group :development, :test do
   gem 'kender', :git => 'git@github.com:mdsol/kender.git'
-  gem 'shamus', :git => 'git@github.com:mdsol/shamus.git', :tag => '0.9.6'
-  gem 'brakeman', '~> 1.8'
-  gem 'bundler-audit', '~> 0.1'
 end
 ```
 
-Kender will only run [Brakeman][b] or [Bundler-audit][a] if you include them in
-the Gemfile, it is highly recommended to include them.
-Specify versions appropriate for your project; the examples versions shown 
-above are just for illustration.
-
-[a]: https://github.com/postmodern/bundler-audit
-[b]: http://brakemanscanner.org/
-
-This gem and it's dependencies should not be deployed in production, hence the
+This gem and its dependencies should not be deployed in production, hence the
 `group` above.
 
 Kender assumes that you have the following rake tasks defined locally in your
@@ -52,7 +41,7 @@ To create `config:all` we strongly recommend you use Kender's companion [Dice
 Bag][db] gem:
 
 ```ruby
-gem 'dice_bag', :git => 'git@github.com:mdsol/dice_bag.git'
+gem 'dice_bag', '~> 0.6'
 ```
 
 [db]: https://github.com/mdsol/dice_bag
@@ -61,7 +50,7 @@ Unlike Kender, Dice Bag is intended for use in all stages, including production.
 
 The `db` tasks are assumed to work like those found in Rails.
 
-If you are using these tasks outside of a Rails project, add the following to
+If you are using these Kender tasks outside of a Rails project, add the following to
 your `Rakefile` or wherever your local rake tasks are defined:
 
 ```ruby
@@ -96,6 +85,74 @@ rake DATABASE_USERNAME=root DATABASE_PASSWORD=password DATABASE_NAME=test ci
 
 To bypass any configuration and clean-up side effects, for example if your
 application is already configured, execute just the `ci:run` task.
+
+### Configuring what software to be run by Kender
+
+Kender will detect the gems of your project and will execute the maximum number of it possible.
+Currently Kender execute the following software:
+
+* [Cucumber][c]
+  Add the following to your Gemfile to activate:
+  ```ruby
+  group :development, :test do
+    gem 'cucumber'
+  end
+  ```
+
+* [Rspec][r]
+  Add the following to your Gemfile to activate:
+  ```ruby
+  group :development, :test do
+    gem 'rspec'
+  end
+  ```
+
+* [Jasmine][j]
+  Add the following to your Gemfile to activate:
+  ```ruby
+  group :development, :test do
+    gem 'jasmine'
+  end
+  ```
+  Additionally you need to have installed [PhantomJS][ph] in the systems running the tests.
+
+* [Brakeman][b]
+  Add the following to your Gemfile to activate:
+  ```ruby
+  group :development, :test do
+    gem 'brakeman'
+  end
+  ```
+  
+* [Bundler-audit][a]
+  Add the following to your Gemfile to activate:
+  ```ruby
+  group :development, :test do
+    gem 'bundler-audit', '~> 0.1'
+  end
+  ```
+  
+* [Shamus][s]
+  Add the following to your Gemfile to activate:
+  ```ruby
+  group :development, :test do
+   gem 'shamus', :git => 'git@github.com:mdsol/shamus.git', :tag => '0.9.7'
+  end
+  ```
+  Whenever Shamus is run, Rspec, Jasmine and Cucumber will not run. To make Shamus run, the environment variable 'VALIDATE_PROJECT' has to be set. 
+  The following would execute Shamus:
+  ```
+  VALIDATE_PROJECT=true rake ci
+  ```
+
+
+[s]: https://github.com/mdsol/shamus
+[b]: http://brakemanscanner.org/
+[a]: https://github.com/postmodern/bundler-audit
+[c]: https://github.com/cucumber/cucumber
+[r]: https://github.com/rspec/rspec
+[j]: https://github.com/pivotal/jasmine-gem
+[ph]: http://phantomjs.org/
 
 ### Setting commit status in GitHub
 
