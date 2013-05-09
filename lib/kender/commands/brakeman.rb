@@ -6,9 +6,7 @@ module Kender
     end
 
     def command
-      if available?
-        'bundle exec brakeman --quiet --exit-on-warn'
-      end
+      'bundle exec brakeman --quiet --exit-on-warn'
     end
 
   end

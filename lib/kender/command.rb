@@ -41,7 +41,7 @@ module Kender
       end
 
       def all
-        @all ||= commands.map(&:new).select { |c| c.available? }
+        @all ||= commands.map(&:new).select(&:available?)
       end
 
     end
@@ -52,5 +52,6 @@ require_relative 'commands/jasmine'
 require_relative 'commands/brakeman'
 require_relative 'commands/bundle_audit'
 require_relative 'commands/shamus'
+require_relative 'commands/test_unit'
 require_relative 'commands/rspec'
 require_relative 'commands/cucumber'

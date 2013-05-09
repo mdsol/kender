@@ -6,9 +6,7 @@ module Kender
     end
 
     def command
-      if available?
-        'bundle exec shamus'
-      end
+      'bundle exec shamus'
     end
   end
 end
