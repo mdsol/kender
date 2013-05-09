@@ -10,31 +10,18 @@ module Kender
       "ci:#{name}"
     end
 
-    # by default all the commands are available
     def available?
-      true
+      raise RuntimeError, "Command failed: #{name}, availability status undefined."
     end
 
     def execute
-      if !run(@command).success?
-        raise RuntimeError, "Command failed: #{@command}"
-      end
+      raise RuntimeError, "Command failed: #{command}" unless run.success?
     end
 
     #TODO: system reload all the gems against, avoid this.
-    def run(command)
+    def run
       system(command)
       $?
-    end
-
-    # I use this method insted of the more rubyist command= because it
-    # feels more explicit and obvious
-    def set_command(command)
-      @command = command
-    end
-
-    def available?
-      !@command.nil?
     end
 
     class << self 
@@ -54,14 +41,17 @@ module Kender
       end
 
       def all
-        @all ||= commands.map(&:new).select { |c| c.setup && c.available? }
+        @all ||= commands.map(&:new).select(&:available?)
       end
 
     end
   end
 end
 
-require_relative 'commands/security'
-require_relative 'commands/validation'
-require_relative 'commands/features'
-require_relative 'commands/specs'
+require_relative 'commands/jasmine'
+require_relative 'commands/brakeman'
+require_relative 'commands/bundle_audit'
+require_relative 'commands/shamus'
+require_relative 'commands/test_unit'
+require_relative 'commands/rspec'
+require_relative 'commands/cucumber'

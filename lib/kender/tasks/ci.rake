@@ -48,7 +48,7 @@ namespace :ci do
   end
 
   Kender::Command.all.each do |command|
-    task command.name do 
+    task command.name do
       command.execute
     end
   end
