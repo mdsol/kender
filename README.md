@@ -26,7 +26,7 @@ group :development, :test do
 end
 ```
 
-This gem and it's dependencies should not be deployed in production, hence the
+This gem and its dependencies should not be deployed in production, hence the
 `group` above.
 
 Kender assumes that you have the following rake tasks defined locally in your
@@ -123,6 +123,15 @@ Currently Kender execute the following software:
     gem 'brakeman'
   end
   ```
+  
+* [Bundler-audit][a]
+  Add the following to your Gemfile to activate:
+  ```ruby
+  group :development, :test do
+    gem 'bundler-audit', '~> 0.1'
+  end
+  ```
+  
 * [Shamus][s]
   Add the following to your Gemfile to activate:
   ```ruby
@@ -139,6 +148,7 @@ Currently Kender execute the following software:
 
 [s]: https://github.com/mdsol/shamus
 [b]: http://brakemanscanner.org/
+[a]: https://github.com/postmodern/bundler-audit
 [c]: https://github.com/cucumber/cucumber
 [r]: https://github.com/rspec/rspec
 [j]: https://github.com/pivotal/jasmine-gem
