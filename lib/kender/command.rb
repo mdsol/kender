@@ -18,7 +18,7 @@ module Kender
       raise RuntimeError, "Command failed: #{command}" unless run.success?
     end
 
-    #TODO: system reload all the gems against, avoid this.
+    #TODO: system reload all the gems again, avoid this.
     def run
       system(command)
       $?
