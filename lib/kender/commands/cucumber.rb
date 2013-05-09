@@ -1,5 +1,5 @@
 module Kender
-  class Features < Command
+  class Cucumber < Command
 
     def available?
       defined?(Cucumber) and not(ENV['VALIDATE_PROJECT'])

@@ -1,5 +1,5 @@
 module Kender
-  class Validation < Command
+  class Shamus < Command
 
     def available?
       defined?(Shamus) and ENV['VALIDATE_PROJECT']

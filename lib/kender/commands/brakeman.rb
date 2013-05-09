@@ -1,5 +1,5 @@
 module Kender
-  class Security < Command
+  class Brakeman < Command
 
     def available?
       defined?(::Brakeman)

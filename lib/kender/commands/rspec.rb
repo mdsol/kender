@@ -1,5 +1,5 @@
 module Kender
-  class Specs < Command
+  class Rspec < Command
 
     def available?
       # TODO: consider creating a separate command for Test::Unit
