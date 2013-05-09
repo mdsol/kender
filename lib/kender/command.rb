@@ -30,18 +30,16 @@ module Kender
         @commands ||= []
       end
 
-      #TODO: if I store objects instead of classes it seems that the @command
-      #become nil, WHY?!?
       def inherited(klass)
-        commands << klass
+        commands << klass.new
       end
 
       def all_tasks
-        all.map{|c| c.task_name  } 
+        all.map(&:task_name)
       end
 
       def all
-        @all ||= commands.map(&:new).select(&:available?)
+        @all ||= commands.select(&:available?)
       end
 
     end
