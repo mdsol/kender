@@ -2,11 +2,6 @@ module Kender
   # Jasmine is a unit testing framework for javascript similar to rspec.
   class Jasmine < Command
 
-    def initialize
-      command = 'bundle exec rake jasmine:phantom:ci'
-      super(command)
-    end
-
     # check whether to actually run this command
     def available?
       # do not run if running shamus
@@ -19,5 +14,10 @@ module Kender
       $?.success?
     end
 
+    def command
+      'bundle exec rake jasmine:phantom:ci'
+    end
+
   end
 end
+

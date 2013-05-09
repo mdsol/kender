@@ -6,12 +6,10 @@ module Kender
     end
 
     def command
-      if available?
-        if defined?(ParallelTests)
-          'rake parallel:features'
-        else
-          'bundle exec cucumber'
-        end
+      if defined?(ParallelTests)
+        'rake parallel:features'
+      else
+        'bundle exec cucumber'
       end
     end
 
