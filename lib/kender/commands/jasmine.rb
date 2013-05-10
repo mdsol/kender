@@ -8,7 +8,7 @@ module Kender
       return false if ENV['VALIDATE_PROJECT']
 
       # verify jasmine and phantomjs are present
-      `phantomjs --version`
+      `phantomjs --version 2>&1 > /dev/null`
       return false unless $?.success?
       `bundle exec jasmine license`
       $?.success?
