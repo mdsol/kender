@@ -7,7 +7,7 @@ module Kender
 
     def command
       if defined?(ParallelTests)
-        'rake parallel:features'
+        'bundle exec rake parallel:features'
       else
         'bundle exec cucumber'
       end

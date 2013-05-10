@@ -7,9 +7,9 @@ module Kender
 
     def command
       if defined?(ParallelTests)
-        'rake parallel:test'
+        'bundle exec rake parallel:test'
       else
-        'rake test'
+        'bundle exec rake test'
       end
     end
 
