@@ -197,7 +197,7 @@ overridden on the command line, for example:
 [bundle exec] rake BUILD_NUMBER=$MY_BUILD_NUM BUILD_URL=http://example.com/url ci
 ```
 
-if you are using multiple remote, you maybe specify it with the environment variable GITHUB_REMOTE
+if you are using multiple remotes, you may specify one with the environment variable GITHUB_REMOTE
 for example:
 
 ```
