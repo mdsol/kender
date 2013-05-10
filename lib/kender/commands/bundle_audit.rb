@@ -1,14 +1,13 @@
 module Kender
   class BundleAudit < Command
 
-    def initialize
-      # This commands fails if there are any problems.
-      command = 'bundle exec bundle-audit check'
-      super(command)
-    end
-
     def available?
       defined?(::Bundler::Audit)
+    end
+
+    def command
+      # This commands fails if there are any problems.
+      'bundle exec bundle-audit check'
     end
 
   end

@@ -1,3 +1,6 @@
+# 0.1.5
+* parallel-test support
+
 # 0.1.4
 * bundler-audit support
 
