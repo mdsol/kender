@@ -1,17 +1,16 @@
 module Kender
   class Rspec < Command
 
-    def initialize
-      command = 'bundle exec rspec'
-      super(command)
+    def available?
+      defined?(RSpec) and not(ENV['VALIDATE_PROJECT'])
     end
 
-    # we run cucumber when we are not running Shamus
-    def available?
-      #this is slow as bundle exec can prove to be quite slow in old rubies
-      return false if ENV['VALIDATE_PROJECT']
-      `bundle exec rspec --version`
-      $?.success?
+    def command
+      if defined?(ParallelTests)
+        'bundle exec rake parallel:spec'
+      else
+        'bundle exec rspec'
+      end
     end
 
   end

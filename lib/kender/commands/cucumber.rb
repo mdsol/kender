@@ -1,17 +1,16 @@
 module Kender
   class Cucumber < Command
 
-    def initialize
-      command = 'bundle exec cucumber'
-      super(command)
+    def available?
+      defined?(Cucumber) and not(ENV['VALIDATE_PROJECT'])
     end
 
-    # we run cucumber when we are not running Shamus
-    def available?
-      #this is slow as bundle exec can prove to be quite slow in old rubies
-      return false if ENV['VALIDATE_PROJECT']
-      `bundle exec cucumber --version`
-      $?.success?
+    def command
+      if defined?(ParallelTests)
+        'bundle exec rake parallel:features'
+      else
+        'bundle exec cucumber'
+      end
     end
 
   end
