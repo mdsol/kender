@@ -2,10 +2,6 @@ module Kender
   # This class abstracts the shell commands we use
   class Command
 
-    def initialize(command)
-      @command = command
-    end
-
     def name 
       self.class.name.split("::").last.downcase.to_sym
     end
@@ -14,22 +10,19 @@ module Kender
       "ci:#{name}"
     end
 
-    # by default all the commands are available
     def available?
-      true
+      raise RuntimeError, "Command failed: #{name}, availability status undefined."
     end
 
     def execute
-      if !run(@command).success?
-        raise RuntimeError, "Command failed: #{@command}"
-      end
+      raise RuntimeError, "Command failed: #{command}" unless run.success?
     end
 
-    def run(command)
+    #TODO: system reload all the gems again, avoid this.
+    def run
       system(command)
       $?
     end
-
 
     class << self 
 
@@ -37,18 +30,16 @@ module Kender
         @commands ||= []
       end
 
-      #TODO: if I store objects instead of classes it seems that the @command
-      #become nil, WHY?!?
       def inherited(klass)
-        commands << klass
+        commands << klass.new
       end
 
       def all_tasks
-        all.map{|c| c.task_name  } 
+        all.map(&:task_name)
       end
 
       def all
-        commands.map(&:new).select { |c| c.available? }
+        @all ||= commands.select(&:available?)
       end
 
     end
@@ -59,5 +50,6 @@ require_relative 'commands/jasmine'
 require_relative 'commands/brakeman'
 require_relative 'commands/bundle_audit'
 require_relative 'commands/shamus'
+require_relative 'commands/test_unit'
 require_relative 'commands/rspec'
 require_relative 'commands/cucumber'
