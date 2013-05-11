@@ -8,10 +8,8 @@ require 'kender/command'
 # Helper method to call rake tasks without blowing up when they do not exists
 # @Return: false when it could not be executed or there was some error.
 def run_successfully?(tasks)
-  [*tasks].inject(true) do |result, task|
-    result && if Rake::Task.task_defined?(task)
-      Rake::Task[task].invoke
-    end
+  [*tasks].all? do |task|
+    Rake::Task.task_defined?(task) && Rake::Task[task].invoke
   end
 end
 
