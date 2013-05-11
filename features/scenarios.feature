@@ -1,12 +1,23 @@
 Feature: Scenarios
-  Kender is able to run scenarious using the cucumber tool
+  Kender is able to run scenarios using the cucumber tool.
 
-  Scenario: The project has some scenarios to run
-    Given a file named "Rakefile" with:
+  Background:
+    Given a file named "Gemfile" with:
       """
-      require 'kender/tasks'
+      gem 'cucumber', '~>1.3'
       """
-    And a file named "features/testing.feature" with:
+    And I run `bundle install`
+
+  Scenario: The project has no scenarios to run but cucumber is executed
+    When I run `rake ci`
+    Then it should pass with:
+    """
+    0 scenarios
+    0 steps
+    """
+
+  Scenario: The project has some passing scenarios to run
+    Given a file named "features/testing.feature" with:
       """
       Feature: test
       This is a test of my product
@@ -19,14 +30,19 @@ Feature: Scenarios
     0 steps
     """
 
-  Scenario: The project has no scenarios to run but cucumber is executed
-    Given a file named "Rakefile" with:
+  Scenario: The project has some non passing scenarios to run
+    Given a file named "features/testing.feature" with:
       """
-      require 'kender/tasks'
+      Feature: test
+      This is a test of my product
+      Scenario: first test
+      Then failing step
+      """
+    And a file named "features/step_definitions/steps.rb" with:
+      """
+      Given(/^failing step$/) do
+        raise 'failed'
+      end
       """
     When I run `rake ci`
-    Then it should pass with:
-    """
-    0 scenarios
-    0 steps
-    """
+    Then the exit status should not be 0
