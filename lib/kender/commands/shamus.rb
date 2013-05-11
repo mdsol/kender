@@ -1,17 +1,12 @@
 module Kender
   class Shamus < Command
 
-    def initialize
-      command = 'bundle exec shamus'
-      super(command)
+    def available?
+      defined?(Shamus) and ENV['VALIDATE_PROJECT']
     end
 
-    # we only run shamus if the we are told so
-    def available?
-      #this is slow as bundle exec can prove to be quite slow in old rubies
-      return false if !ENV['VALIDATE_PROJECT']
-      `bundle exec shamus --help`
-      $?.success?
+    def command
+      'bundle exec shamus'
     end
   end
 end

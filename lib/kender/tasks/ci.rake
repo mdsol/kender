@@ -1,3 +1,6 @@
+#make sure we require all the tools we need loaded in memory
+Bundler.require(:default, :test)
+
 require 'kender/configuration'
 require 'kender/github'
 require 'kender/command'
@@ -40,8 +43,15 @@ namespace :ci do
   desc "Destroy resources created externally for the continuous integration run, e.g. drops databases"
   task :clean => ['ci:env', 'ci:drop_db']
 
+  # Automatically create rake task for each individual command.
+  Kender::Command.all.each do |command|
+    desc "Individual task for #{command.name}, in parallel if available."
+    task command.name do
+      command.execute
+    end
+  end
 
-  # These tasks are internal to us, without description, the user can not discover them
+  # The following tasks are internal to us, without description, the user can not discover them
   task :env do
     if defined?(Rails)
       # Default to the 'test' environment unless otherwise specified. This
@@ -60,30 +70,29 @@ namespace :ci do
     end
   end
 
-
-  # TODO:  Could depend on 'db:schema:load' or 'db:setup' here instead of 'db:migrate'
-  # if the 'db/schema.rb' file was committed to the repo (as per Rails
-  # recommendations).
   task :setup_db do
-    unless run_successfully?(['db:create', 'db:migrate'])
-      puts 'The DB could not be set up. Define db:create and db:migrate for your test environment'
+    if !defined?(ParallelTests)
+      unless run_successfully?(['db:create', 'db:migrate'])
+        puts 'The DB could not be set up. Define db:create and db:migrate for your test environment'
+      end
+    else
+      #TODO: invoke on the task did not work. Why?
+      system('bundle exec rake parallel:create')
+      system('bundle exec rake parallel:prepare')
     end
   end
 
   task :drop_db do
-    unless run_successfully?('db:drop')
-      puts 'The DB could not be dropped. Define db:drop in your test environment'
+    if !defined?(ParallelTests)
+      unless run_successfully?('db:drop')
+        puts 'The DB could not be dropped. Define db:drop in your test environment'
+      end
+    else
+      #TODO: invoke on the task did not work. Why?
+      system('bundle exec rake parallel:drop')
     end
   end
 
-  Kender::Command.all.each do |command|
-    task command.name do 
-      command.execute
-    end
-  end
-
-
-  #Tasks related to updating the status in Github
   namespace :status do
 
     config = Kender::Configuration.new
