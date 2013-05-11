@@ -4,6 +4,7 @@ Feature: Scenarios
   Background:
     Given a file named "Gemfile" with:
       """
+      source 'https://rubygems.org'
       gem 'cucumber', '~>1.3'
       """
     And I run `bundle install`
