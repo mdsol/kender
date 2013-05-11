@@ -21,6 +21,11 @@ module Kender
       # TODO: Refactor the following code to use gems like git/grit/rugged and
       # octokit. ~asmith
 
+      unless config.github_auth_token
+        puts "Skipping setting the status on Github to #{state} because the access token is not configured"
+        return
+      end
+
       body = %Q({
         "state": "#{state.to_s}",
         "target_url": "#{config.build_url}",
@@ -36,12 +41,7 @@ module Kender
 
       uri = URI("https://api.github.com/repos/#{repo}/statuses/#{commit}?access_token=#{config.github_auth_token}")
 
-      if config.github_auth_token
-        puts "Setting #{repo} commit #{commit} status to '#{state}' on GitHub"
-      else
-        puts "Skipping setting #{repo} commit #{commit} status to '#{state}' on GitHub because access token not configured"
-        return
-      end
+      puts "Setting #{repo} commit #{commit} status to '#{state}' on GitHub"
 
       Net::HTTP.start(uri.host, uri.port, :use_ssl => true) do |http|
         response = http.post(uri.request_uri, body)
