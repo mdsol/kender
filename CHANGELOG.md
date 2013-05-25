@@ -1,3 +1,6 @@
+# master
+Bugfix: Only execute with bundle exec gems in the Gemfile
+
 # 0.1.5
 * parallel-test support
 
