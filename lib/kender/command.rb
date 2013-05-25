@@ -11,11 +11,11 @@ module Kender
     end
 
     def available?
-      raise RuntimeError, "Command failed: #{name}, availability status undefined."
+      abort "Command failed: #{name}, availability status undefined."
     end
 
     def execute
-      raise RuntimeError, "Command failed: #{command}" unless run.success?
+      abort "Command failed: #{command}" unless run.success?
     end
 
     #TODO: system reload all the gems again, avoid this.
@@ -43,6 +43,13 @@ module Kender
       end
 
     end
+
+    private
+
+    def in_gemfile?(gem_name)
+      Bundler.definition.specs.any?{ |spec| spec.name == gem_name }
+    end
+
   end
 end
 

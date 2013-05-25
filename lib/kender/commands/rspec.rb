@@ -2,7 +2,7 @@ module Kender
   class Rspec < Command
 
     def available?
-      defined?(RSpec) and not(ENV['VALIDATE_PROJECT'])
+      in_gemfile?("rspec") and not(ENV['VALIDATE_PROJECT'])
     end
 
     def command
