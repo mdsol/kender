@@ -132,6 +132,14 @@ Currently Kender execute the following software:
   end
   ```
   
+* [Consistency_fail][cf]
+  Add the following to your Gemfile to activate:
+  ```ruby
+  group :development, :test do
+    gem 'consistency_fail', '~> 0.3'
+  end
+  ```
+
 * [Shamus][s]
   Add the following to your Gemfile to activate:
   ```ruby
@@ -153,6 +161,7 @@ Currently Kender execute the following software:
 [r]: https://github.com/rspec/rspec
 [j]: https://github.com/pivotal/jasmine-gem
 [ph]: http://phantomjs.org/
+[cf]: https://github.com/trptcolin/consistency_fail/
 
 ### Setting commit status in GitHub
 
