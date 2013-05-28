@@ -5,6 +5,15 @@ require 'kender/configuration'
 require 'kender/github'
 require 'kender/command'
 
+# Helper method to call rake tasks without blowing up when they do not exists
+# @Return: false when it could not be executed or there was some error.
+def run_successfully?(tasks)
+  [*tasks].all? do |task|
+    Rake::Task.task_defined?(task) && Rake::Task[task].invoke
+  end
+end
+
+# This is the task we want the user to use all the time.
 desc "Configure and run continuous integration tests then clean up"
 task :ci => ['ci:status:pending'] do
   begin
@@ -13,7 +22,6 @@ task :ci => ['ci:status:pending'] do
     Rake::Task["ci:status:success"].invoke
   rescue Exception => e
     Rake::Task["ci:status:failure"].invoke
-
     # Ensure that this task still fails.
     raise e
   ensure
@@ -23,11 +31,9 @@ end
 
 namespace :ci do
 
+  # UI for the user, these are tasks the user can use
   desc "Configure the app to run continuous integration tests"
-  # Could depend on 'db:schema:load' or 'db:setup' here instead of 'db:migrate'
-  # if the 'db/schema.rb' file was committed to the repo (as per Rails
-  # recommendations).
-  task :config => ['ci:env', 'config:all', 'ci:setup_db']
+  task :config => ['ci:env', 'ci:config_project', 'ci:setup_db']
 
   desc "Run continuous integration tests with the current configuration"
   task :run =>  ['ci:env'] + Kender::Command.all_tasks
@@ -35,6 +41,15 @@ namespace :ci do
   desc "Destroy resources created externally for the continuous integration run, e.g. drops databases"
   task :clean => ['ci:env', 'ci:drop_db']
 
+  # Automatically create rake task for each individual command.
+  Kender::Command.all.each do |command|
+    desc "Individual task for #{command.name}, in parallel if available."
+    task command.name do
+      command.execute
+    end
+  end
+
+  # The following tasks are internal to us, without description, the user can not discover them
   task :env do
     if defined?(Rails)
       # Default to the 'test' environment unless otherwise specified. This
@@ -47,19 +62,17 @@ namespace :ci do
     end
   end
 
-  # Automatically create rake task for each individual command.
-  Kender::Command.all.each do |command|
-    desc "Individual task for #{command.name}, in parallel if available."
-    task command.name do
-      command.execute
+  task :config_project do
+    unless run_successfully?('config:all')
+      puts 'Your project could not be configured, a config:all task needed. Consider installing dice_bag'
     end
   end
 
-  desc "Generic task to setup your databases, in parallel if available."
   task :setup_db do
     if !defined?(ParallelTests)
-      Rake::Task['db:create'].invoke
-      Rake::Task['db:migrate'].invoke
+      unless run_successfully?(['db:create', 'db:migrate'])
+        puts 'The DB could not be set up. Define db:create and db:migrate for your test environment'
+      end
     else
       #TODO: invoke on the task did not work. Why?
       system('bundle exec rake parallel:create')
@@ -67,10 +80,11 @@ namespace :ci do
     end
   end
 
-  desc "Generic task to drop your databases, in parallel if available."
   task :drop_db do
     if !defined?(ParallelTests)
-      Rake::Task['db:drop'].invoke
+      unless run_successfully?('db:drop')
+        puts 'The DB could not be dropped. Define db:drop in your test environment'
+      end
     else
       #TODO: invoke on the task did not work. Why?
       system('bundle exec rake parallel:drop')
