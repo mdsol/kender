@@ -1,3 +1,6 @@
+# 0.1.6
+* github subdomains support and customizable remote name
+
 # 0.1.5
 * parallel-test support
 
