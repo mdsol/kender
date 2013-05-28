@@ -33,9 +33,10 @@ module Kender
       })
       commit = `git log -1 --format=format:%H`
       remotes = `git remote --verbose`
+      remote_name = ENV['GITHUB_REMOTE'] || 'origin'
 
-      unless repo = /^origin\s+git@github.com:(\w+\/\w+)\b/.match(remotes)[1]
-        put "Could not establish GitHub repo name from 'origin' remote"
+      unless repo = /^#{remote_name}\s+git@(\w+\.)?github.com:([\w-]+\/\w+)\b/.match(remotes).to_a.last
+        puts "Could not establish GitHub repo name from '#{remote_name}' remote"
         return
       end
 
