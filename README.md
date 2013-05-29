@@ -206,6 +206,13 @@ overridden on the command line, for example:
 [bundle exec] rake BUILD_NUMBER=$MY_BUILD_NUM BUILD_URL=http://example.com/url ci
 ```
 
+if you are using multiple remotes, you may specify one with the environment variable GITHUB_REMOTE
+for example:
+
+```
+[bundle exec] rake GITHUB_REMOTE=personal ci
+```
+
 [je]: https://wiki.jenkins-ci.org/display/JENKINS/Building+a+software+project#Buildingasoftwareproject-JenkinsSetEnvironmentVariables
 
 ## Owners
