@@ -53,6 +53,7 @@ module Kender
   end
 end
 
+require_relative 'commands/consistency_fail'
 require_relative 'commands/jasmine'
 require_relative 'commands/brakeman'
 require_relative 'commands/bundle_audit'
