@@ -2,7 +2,7 @@ module Kender
   class Shamus < Command
 
     def available?
-      defined?(Shamus) and ENV['VALIDATE_PROJECT']
+      in_gemfile?("shamus") and ENV['VALIDATE_PROJECT']
     end
 
     def command

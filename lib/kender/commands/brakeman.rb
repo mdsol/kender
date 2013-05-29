@@ -2,7 +2,7 @@ module Kender
   class Brakeman < Command
 
     def available?
-      defined?(::Brakeman)
+      in_gemfile?('brakeman')
     end
 
     def command
