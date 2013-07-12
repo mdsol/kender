@@ -30,11 +30,10 @@ module Kender
       remotes = `git remote --verbose`
       remote_name = ENV['GITHUB_REMOTE'] || 'origin'
 
-      unless repo = /^#{remote_name}\s+git@(\w+\.)?github.com:([\w-]+\/\w+)\b/.match(remotes).to_a.last
+      unless repo = /^#{remote_name}\s+git@(\w+\.)?github.com:([\w-]+\/[\w-]+)\b/.match(remotes).to_a.last
         puts "Could not establish GitHub repo name from '#{remote_name}' remote"
         return
       end
-
       uri = URI("https://api.github.com/repos/#{repo}/statuses/#{commit}?access_token=#{config.github_auth_token}")
 
       if config.github_auth_token
