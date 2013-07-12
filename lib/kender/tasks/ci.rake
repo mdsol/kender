@@ -57,23 +57,31 @@ namespace :ci do
 
   desc "Generic task to setup your databases, in parallel if available."
   task :setup_db do
-    if !defined?(ParallelTests)
-      Rake::Task['db:create'].invoke
-      Rake::Task['db:migrate'].invoke
+    if Rake::Task.task_defined?('db:create')
+      if !defined?(ParallelTests)
+        Rake::Task['db:create'].invoke
+        Rake::Task['db:migrate'].invoke
+      else
+        #TODO: invoke on the task did not work. Why?
+        system('bundle exec rake parallel:create')
+        system('bundle exec rake parallel:prepare')
+      end
     else
-      #TODO: invoke on the task did not work. Why?
-      system('bundle exec rake parallel:create')
-      system('bundle exec rake parallel:prepare')
+      puts "no databases tasks found."
     end
   end
 
   desc "Generic task to drop your databases, in parallel if available."
   task :drop_db do
-    if !defined?(ParallelTests)
-      Rake::Task['db:drop'].invoke
+    if Rake::Task.task_defined?('db:drop')
+      if !defined?(ParallelTests)
+        Rake::Task['db:drop'].invoke
+      else
+        #TODO: invoke on the task did not work. Why?
+        system('bundle exec rake parallel:drop')
+      end
     else
-      #TODO: invoke on the task did not work. Why?
-      system('bundle exec rake parallel:drop')
+      puts "no databases tasks found."
     end
   end
 
