@@ -2,7 +2,7 @@ module Kender
   class BundleAudit < Command
 
     def available?
-      defined?(::Bundler::Audit)
+      in_gemfile?('bundler-audit')
     end
 
     def command

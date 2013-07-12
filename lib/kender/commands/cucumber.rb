@@ -2,7 +2,7 @@ module Kender
   class Cucumber < Command
 
     def available?
-      defined?(Cucumber) and not(ENV['VALIDATE_PROJECT'])
+      in_gemfile?("cucumber") and not(ENV['VALIDATE_PROJECT'])
     end
 
     def command

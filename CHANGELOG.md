@@ -1,4 +1,8 @@
 # 0.1.6
+* Consistency_fail support
+* Bugfix: Only execute with bundle exec gems in the Gemfile
+
+# 0.1.6
 * github subdomains support and customizable remote name
 
 # 0.1.5
