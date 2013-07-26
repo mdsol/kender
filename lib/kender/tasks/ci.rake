@@ -69,25 +69,33 @@ namespace :ci do
   end
 
   task :setup_db do
-    if !defined?(ParallelTests)
-      unless run_successfully?(['db:create', 'db:migrate'])
-        puts 'The DB could not be set up. Define db:create and db:migrate for your test environment'
+    if Rake::Task.task_defined?('db:create')
+      if !defined?(ParallelTests)
+        unless run_successfully?(['db:create', 'db:migrate'])
+          puts 'The DB could not be set up successfully.'
+        end
+      else
+        #TODO: invoke on the task did not work. Why?
+        system('bundle exec rake parallel:create')
+        system('bundle exec rake parallel:prepare')
       end
     else
-      #TODO: invoke on the task did not work. Why?
-      system('bundle exec rake parallel:create')
-      system('bundle exec rake parallel:prepare')
+      puts "no databases tasks found."
     end
   end
 
   task :drop_db do
-    if !defined?(ParallelTests)
-      unless run_successfully?('db:drop')
-        puts 'The DB could not be dropped. Define db:drop in your test environment'
+    if Rake::Task.task_defined?('db:drop')
+      if !defined?(ParallelTests)
+        unless run_successfully?('db:drop')
+          puts 'The DB could not be dropped.'
+        end
+      else
+        #TODO: invoke on the task did not work. Why?
+        system('bundle exec rake parallel:drop')
       end
     else
-      #TODO: invoke on the task did not work. Why?
-      system('bundle exec rake parallel:drop')
+      puts "no databases tasks found."
     end
   end
 
