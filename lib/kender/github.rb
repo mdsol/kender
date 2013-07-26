@@ -43,13 +43,29 @@ module Kender
 
       puts "Setting #{repo} commit #{commit} status to '#{state}' on GitHub"
 
-      Net::HTTP.start(uri.host, uri.port, :use_ssl => true) do |http|
-        response = http.post(uri.request_uri, body)
-        unless response.is_a?(Net::HTTPCreated)
-          puts "Setting commit status FAILED", response
+      ensure_real_connection do
+        Net::HTTP.start(uri.host, uri.port, :use_ssl => true) do |http|
+          response = http.post(uri.request_uri, body)
+          unless response.is_a?(Net::HTTPCreated)
+            puts "Setting commit status FAILED", response
+          end
         end
       end
     end
+
+    def ensure_real_connection
+      if !defined?(WebMock)
+        return yield
+      end
+      if !WebMock.net_connect_allowed?
+        WebMock.allow_net_connect!
+        yield
+        WebMock.disable_net_connect!
+      else
+        yield
+      end
+    end
+
   end
 end
 
