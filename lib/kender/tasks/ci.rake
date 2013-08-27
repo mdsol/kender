@@ -1,6 +1,3 @@
-#make sure we require all the tools we need loaded in memory
-Bundler.require(:default, :test)
-
 require 'kender/configuration'
 require 'kender/github'
 require 'kender/command'
@@ -36,17 +33,20 @@ namespace :ci do
   task :config => ['ci:env', 'ci:config_project', 'ci:setup_db']
 
   desc "Run continuous integration tests with the current configuration"
-  task :run =>  ['ci:env'] + Kender::Command.all_tasks
+  task :run =>  ['ci:env'] do
+    #make sure we require all the tools we need loaded in memory
+    Kender::Command.all.each do |command|
+      command.execute
+    end
+  end
 
   desc "Destroy resources created externally for the continuous integration run, e.g. drops databases"
   task :clean => ['ci:env', 'ci:drop_db']
 
-  # Automatically create rake task for each individual command.
-  Kender::Command.all.each do |command|
-    desc "Individual task for #{command.name}, in parallel if available."
-    task command.name do
-      command.execute
-    end
+  desc "Shows a list of all the software Kender will call when ci:run is invoked."
+  task :list => ['ci:env'] do
+    puts "Kender will execute the following software:"
+    puts Kender::Command.all_names.join("\n")
   end
 
   # The following tasks are internal to us, without description, the user can not discover them
