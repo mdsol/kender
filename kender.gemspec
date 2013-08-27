@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.authors = ['Andrew Smith', 'Jordi Polo']
   s.email = ['asmith@mdsol.com', 'jcarres@mdsol.com']
   s.summary = 'Kender is a library of rake tasks that provides a consistent framework for continuous integration (CI).'
+  s.license = 'MIT'
 
   s.files = Dir['lib/**/*']
   s.test_files = Dir['features/**/*']
