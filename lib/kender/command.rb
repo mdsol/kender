@@ -2,12 +2,8 @@ module Kender
   # This class abstracts the shell commands we use
   class Command
 
-    def name 
+    def name
       self.class.name.split("::").last.downcase.to_sym
-    end
-
-    def task_name
-      "ci:#{name}"
     end
 
     def available?
@@ -24,7 +20,7 @@ module Kender
       $?
     end
 
-    class << self 
+    class << self
 
       def commands
         @commands ||= []
@@ -34,8 +30,8 @@ module Kender
         commands << klass.new
       end
 
-      def all_tasks
-        all.map(&:task_name)
+      def all_names
+        all.map(&:name)
       end
 
       def all

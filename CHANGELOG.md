@@ -1,3 +1,6 @@
+# 0.2
+* Kender do not create magic task per command. Avoid slowing down Rake.
+
 # 0.1.7
 * Bugfix: Support for projects using WebMock
 
