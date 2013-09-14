@@ -1,6 +1,7 @@
 require 'kender/configuration'
 require 'kender/github'
 require 'kender/command'
+require 'kender/coverage'
 
 # Helper method to call rake tasks without blowing up when they do not exists
 # @Return: false when it could not be executed or there was some error.
@@ -38,6 +39,7 @@ namespace :ci do
     Kender::Command.all.each do |command|
       command.execute
     end
+    Kender::Coverage.report
   end
 
   desc "Destroy resources created externally for the continuous integration run, e.g. drops databases"
