@@ -2,8 +2,7 @@ module Kender
   class Reek < Command
 
     def available?
-      `reek -v`
-      $?.success?
+      in_gemfile?('reek')
     end
 
     def command
