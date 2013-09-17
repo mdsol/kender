@@ -6,8 +6,7 @@ module Kender
     end
 
     def command
-      # doing simple echo to ignore error status.
-      'reek app lib; echo ok'
+      'reek app lib'
     end
 
   end
