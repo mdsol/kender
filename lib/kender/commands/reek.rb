@@ -6,7 +6,7 @@ module Kender
     end
 
     def command
-      'bundle exec reek .'
+      'bundle exec reek -q .'
     end
 
   end
