@@ -6,7 +6,7 @@ module Kender
     end
 
     def command
-      'reek app lib'
+      'bundle exec reek .'
     end
 
   end
