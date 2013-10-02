@@ -131,7 +131,15 @@ Currently Kender execute the following software:
     gem 'bundler-audit', '~> 0.1'
   end
   ```
-  
+
+* [Reek][r]
+  Add the following to your Gemfile to activate:
+  ```ruby
+  group :development, :test do
+    gem 'reek', '~> 1.3'
+  end
+  ```
+
 * [Consistency_fail][cf]
   Add the following to your Gemfile to activate:
   ```ruby
@@ -157,6 +165,7 @@ Currently Kender execute the following software:
 [s]: https://github.com/mdsol/shamus
 [b]: http://brakemanscanner.org/
 [a]: https://github.com/postmodern/bundler-audit
+[r]: https://github.com/troessner/reek
 [c]: https://github.com/cucumber/cucumber
 [r]: https://github.com/rspec/rspec
 [j]: https://github.com/pivotal/jasmine-gem
