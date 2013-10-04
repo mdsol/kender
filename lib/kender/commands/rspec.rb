@@ -2,7 +2,10 @@ module Kender
   class Rspec < Command
 
     def available?
-      in_gemfile?("rspec") and not(ENV['VALIDATE_PROJECT'])
+      # do not run if running shamus
+      return false if ENV['VALIDATE_PROJECT']
+
+      in_gemfile?("rspec") || in_gemfile?("rspec-rails")
     end
 
     def command

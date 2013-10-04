@@ -7,6 +7,9 @@ module Kender
       # do not run if running shamus
       return false if ENV['VALIDATE_PROJECT']
 
+      # make sure those gems were added
+      return false unless in_gemfile?("jasmine") && in_gemfile?("jasmine-phantom")
+
       # verify jasmine and phantomjs are present
       `phantomjs --version 2>&1 > /dev/null`
       return false unless $?.success?
