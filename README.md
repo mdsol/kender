@@ -1,11 +1,16 @@
 # Kender
 
-Kender is a library of rake tasks that provides a consistent framework for
-continuous integration (CI). The principles of Kender are:
+Kender provides a consistent framework for continuous integration (CI). The
+principles of Kender are:
 
-* CI runs are executed the same way by everyone. Developers should be able to
-  execute the same, simple command on their machines to perform a CI run as is
-  used on a dedicated CI server. No more publishing a branch unsure of whether
+* The definition of what constitutes your CI runs is dependent on your code, so
+  it should be managed alongside that code and not isolated in your CI server's
+  configuration.
+
+* CI runs are executed the same way, wherever they run, whoever runs them.
+  Developers should be able to execute the same, simple command on their local
+  machines to execute a CI run as is used on a dedicated CI server. No more
+  publishing a branch that requires a CI configuration change, unsure of whether
   the CI server will pass or fail.
 
 * CI runs are executed the same way on every branch. A single CI project
@@ -13,7 +18,7 @@ continuous integration (CI). The principles of Kender are:
   on the CI server due to branch changes being incompatible with the current CI
   project configuration.
 
-* CI runs have directly visible status, e.g. in the GitHub pulls requests. No
+* CI runs have directly visible status, e.g. in the GitHub pull requests. No
   more merging bad branches.
 
 ## Usage
@@ -29,24 +34,25 @@ end
 This gem and its dependencies should not be deployed in production, hence the
 `group` above.
 
-Kender assumes that you have the following rake tasks defined locally in your
-project:
+Kender-based CI runs are executed using the `ci` rake task. The following rake
+tasks defined locally in your project will be run at the appropriate point in
+the process if they exist:
 
 * `config:all`
 * `db:migrate`
 * `db:create`
 * `db:drop`
 
-To create `config:all` we strongly recommend you use Kender's companion [Dice
-Bag][db] gem:
+To create `config:all` we strongly recommend you use Kender's companion
+[DiceBag][db] gem:
 
 ```ruby
-gem 'dice_bag', '~> 0.6'
+gem 'dice_bag', '~> 0.7'
 ```
 
 [db]: https://github.com/mdsol/dice_bag
 
-Unlike Kender, Dice Bag is intended for use in all stages, including production.
+Unlike Kender, DiceBag is intended for use in all stages, including production.
 
 The `db` tasks are assumed to work like those found in Rails.
 
@@ -63,7 +69,7 @@ Run the following command to see the new tasks:
 [bundle exec] rake -D ci
 ```
 
-### Performing a CI run
+### Execute a CI run
 
 The rake `ci` task can be run locally in precisely the same way as it should be
 on a CI server:
@@ -72,12 +78,12 @@ on a CI server:
 rake ci
 ```
 
-This performs the three sub-tasks `ci:config`, `ci:run` and `ci:clean`. Each of
+This executes the three sub-tasks `ci:config`, `ci:run` and `ci:clean`. Each of
 these can be run in isolation.
 
-Configuration typically requires values to be provided. Using the Dice Bag gem,
-this can be done through environment variables passed on the rake command line.
-For example, in a typical Rails project you would use the following:
+Configuration typically requires values to be provided. Using DiceBag, this can
+be done through environment variables passed on the rake command line. For
+example, in a typical Rails project you would use the following:
 
 ```
 rake DATABASE_USERNAME=root DATABASE_PASSWORD=password DATABASE_NAME=test ci
@@ -86,91 +92,82 @@ rake DATABASE_USERNAME=root DATABASE_PASSWORD=password DATABASE_NAME=test ci
 To bypass any configuration and clean-up side effects, for example if your
 application is already configured, execute just the `ci:run` task.
 
-### Configuring what software to be run by Kender
+### Configuring what is included in the CI run
 
-Kender will detect the gems of your project and will execute the maximum number of it possible.
-Currently Kender execute the following software:
+Kender will detect the test-related gems in your Gemfile and execute whatever
+CI-related commands make sense. Just ensure the gem is available in at least
+your test and development environments.
 
-* [Cucumber][c]
-  Add the following to your Gemfile to activate:
-  ```ruby
-  group :development, :test do
-    gem 'cucumber'
-  end
-  ```
+Currently supported gems are:
 
-* [Rspec][r]
-  Add the following to your Gemfile to activate:
-  ```ruby
-  group :development, :test do
-    gem 'rspec'
-  end
-  ```
+#### Cucumber
 
-* [Jasmine][j]
-  Add the following to your Gemfile to activate:
-  ```ruby
-  group :development, :test do
-    gem 'jasmine'
-  end
-  ```
-  Additionally you need to have installed [PhantomJS][ph] in the systems running the tests.
+The [Cucumber][c] features will be run. No command-line parameters or switches
+are passed, so ensure your default profile is correct for a CI run. If the
+cucumber command fails, the CI run will fail.
 
-* [Brakeman][b]
-  Add the following to your Gemfile to activate:
-  ```ruby
-  group :development, :test do
-    gem 'brakeman'
-  end
-  ```
-  
-* [Bundler-audit][a]
-  Add the following to your Gemfile to activate:
-  ```ruby
-  group :development, :test do
-    gem 'bundler-audit', '~> 0.1'
-  end
-  ```
-
-* [Reek][r]
-  Add the following to your Gemfile to activate:
-  ```ruby
-  group :development, :test do
-    gem 'reek', '~> 1.3'
-  end
-  ```
-
-* [Consistency_fail][cf]
-  Add the following to your Gemfile to activate:
-  ```ruby
-  group :development, :test do
-    gem 'consistency_fail', '~> 0.3'
-  end
-  ```
-
-* [Shamus][s]
-  Add the following to your Gemfile to activate:
-  ```ruby
-  group :development, :test do
-   gem 'shamus', :git => 'git@github.com:mdsol/shamus.git', :tag => '0.9.7'
-  end
-  ```
-  Whenever Shamus is run, Rspec, Jasmine and Cucumber will not run. To make Shamus run, the environment variable 'VALIDATE_PROJECT' has to be set. 
-  The following would execute Shamus:
-  ```
-  VALIDATE_PROJECT=true rake ci
-  ```
-
-
-[s]: https://github.com/mdsol/shamus
-[b]: http://brakemanscanner.org/
-[a]: https://github.com/postmodern/bundler-audit
-[r]: https://github.com/troessner/reek
 [c]: https://github.com/cucumber/cucumber
+
+#### RSpec
+
+The [RSpec][r] specs will be run. No command-line parameters or switches are
+passed, so ensure your defaults in `.rspec` are correct for a CI run. If the
+rspec command fails, the CI run will fail.
+
 [r]: https://github.com/rspec/rspec
+
+#### Jasmine
+
+The [Jasmine][j] rake task `jasmine:phantom:ci` will be run. If the task fails,
+the CI run will fail.
+
+Additionally, you must have [PhantomJS][ph] pre-installed on the system doing
+the CI run.
+
 [j]: https://github.com/pivotal/jasmine-gem
 [ph]: http://phantomjs.org/
+
+#### Brakeman
+
+The [Brakeman][b] command is run in quiet mode. If any warnings are generated,
+the CI run will fail.
+  
+[b]: http://brakemanscanner.org/
+
+#### Bundler Audit
+
+The [Bundler-audit][a] `check` command is run. If any checks fail, the CI run
+will fail.
+
+[a]: https://github.com/postmodern/bundler-audit
+
+#### Reek
+
+The [Reek][r] command is run in quiet mode. The CI run will not fail, regardless
+of the output.
+
+[r]: https://github.com/troessner/reek
+
+#### Consistency Fail
+
+The [Consistency Fail][cf] command is run. The CI run will not fail, regardless
+of the output.
+
 [cf]: https://github.com/trptcolin/consistency_fail/
+
+#### Shamus
+
+The [Shamus][s] command is run. If the command fails, the CI run will fail.
+
+When Shamus is used, RSpec, Jasmine and Cucumber are not run directly by Kender
+but delegated to Shamus instead. As you may not want to run Shamus by default in
+a CI context, you must set the environment variable `VALIDATE_PROJECT`:
+
+```
+rake VALIDATE_PROJECT=true ci
+```
+
+[s]: https://github.com/mdsol/shamus
 
 ### Setting commit status in GitHub
 
@@ -215,8 +212,8 @@ overridden on the command line, for example:
 [bundle exec] rake BUILD_NUMBER=$MY_BUILD_NUM BUILD_URL=http://example.com/url ci
 ```
 
-if you are using multiple remotes, you may specify one with the environment variable GITHUB_REMOTE
-for example:
+If you are using multiple remotes, you may specify one with the environment
+variable `GITHUB_REMOTE`:
 
 ```
 [bundle exec] rake GITHUB_REMOTE=personal ci
@@ -224,8 +221,10 @@ for example:
 
 [je]: https://wiki.jenkins-ci.org/display/JENKINS/Building+a+software+project#Buildingasoftwareproject-JenkinsSetEnvironmentVariables
 
-## Owners
+## Contributors
 
-* [Andrew Smith](mailto:asmith@mdsol.com)
-* [Jordi Carres](mailto:jcarres@mdsol.com)
+* [Andrew Smith](https://github.com/asmith-mdsol)
+* [Jordi Carres](https://github.com/jcarres-mdsol)
+* [Mathieu Jobin](https://github.com/mjobin-mdsol)
+* [Will Duty](https://github.com/wdutymdsol)
 
