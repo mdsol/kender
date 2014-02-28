@@ -1,7 +1,9 @@
 namespace :pb do
   desc "finds duplicate PB numbers"
   task :duplicates do
-    all = PBNumber.collect.inject( Hash.new(0) ) do | memo, pb_number |
+    features_base_path = ENV['features'] || "#{Rails.root}/features"
+
+    all = PBNumber.collect(features_base_path).inject( Hash.new(0) ) do | memo, pb_number |
       memo[pb_number.to_s] = [] if memo[pb_number.to_s] == 0
       memo[pb_number.to_s] << pb_number
       memo
@@ -41,7 +43,8 @@ namespace :pb do
       @number_string
     end
 
-    def self.collect( file_or_directory = FeatureFile::FEATURES_DIR )
+    def self.collect(file_or_directory)
+      puts  Dir["#{file_or_directory}/*/**/*.feature"]
       FeatureFile.scan(file_or_directory).flat_map { |file| file.pb_numbers }
     end
   end
@@ -50,8 +53,6 @@ namespace :pb do
     include Comparable
 
     attr_reader :name, :path
-
-    FEATURES_DIR = File.join( Rails.root, 'features')
 
     def initialize( file_path )
       self.file_path = file_path
@@ -78,7 +79,7 @@ namespace :pb do
       feature_files = if File.file?( file_or_directory )
         feature_files = FeatureFile.new( file_or_directory )
       else
-        Dir["#{file_or_directory}/*/**/*.feature"].map { |file_path| FeatureFile.new( file_path ) }
+        Dir["#{file_or_directory}/**/*.feature"].map { |file_path| FeatureFile.new( file_path ) }
       end
     end
 
