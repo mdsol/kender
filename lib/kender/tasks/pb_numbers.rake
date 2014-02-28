@@ -13,6 +13,8 @@ namespace :pb do
       puts "Found duplicate #{duplicate_pb_number}. Following is where it's used:"
       locations.each { |pb_number| puts "  #{pb_number.feature_file.path}:#{pb_number.line_number}" }
     end
+
+    raise "Error: Found duplicate PB Numbers. Please fix." unless duplicates.empty?
   end
 
   class PBNumber
