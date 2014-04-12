@@ -77,6 +77,7 @@ namespace :ci do
       else
         #TODO: invoke on the task did not work. Why?
         system('bundle exec rake parallel:create')
+        system('bundle exec rake parallel:load_schema')
         system('bundle exec rake parallel:migrate')
         system('bundle exec rake parallel:prepare')
       end
