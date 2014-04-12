@@ -71,12 +71,13 @@ namespace :ci do
   task :setup_db do
     if Rake::Task.task_defined?('db:create')
       if !defined?(ParallelTests)
-        unless run_successfully?(['db:create', 'db:migrate'])
+        unless run_successfully?(['db:create', 'db:schema:load', 'db:migrate'])
           puts 'The DB could not be set up successfully.'
         end
       else
         #TODO: invoke on the task did not work. Why?
         system('bundle exec rake parallel:create')
+        system('bundle exec rake parallel:migrate')
         system('bundle exec rake parallel:prepare')
       end
     else
