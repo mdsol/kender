@@ -219,6 +219,13 @@ variable `GITHUB_REMOTE`:
 [bundle exec] rake GITHUB_REMOTE=personal ci
 ```
 
+if you are using Jenkins with multiple remotes, you may want to have it automatically select the right
+one for you. Here is a quick bash trick you can use.
+
+```bash
+export GITHUB_REMOTE=`echo "$GIT_BRANCH" | awk -F / '{print $1}'`
+```
+
 [je]: https://wiki.jenkins-ci.org/display/JENKINS/Building+a+software+project#Buildingasoftwareproject-JenkinsSetEnvironmentVariables
 
 ## Contributors
