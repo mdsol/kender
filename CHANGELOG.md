@@ -1,3 +1,6 @@
+# 0.2.2
+* Adds support for i18n-tasks gem.
+
 # 0.2
 * Kender do not create magic task per command. Avoid slowing down Rake.
 
