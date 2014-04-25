@@ -157,7 +157,7 @@ of the output.
 
 #### I18n Tasks
 
-The [I18n Tasks][i] commands to check for both missing and unused translations is executed.
+The [I18n Tasks][i] commands to check for both missing and unused translations are executed.
 The CI run will not fail, regardless of the output.
 
 [i]: https://github.com/glebm/i18n-tasks
