@@ -39,7 +39,7 @@ Feature: Rspec
       """
       describe "My software" do
         it "fails miserably" do
-          expect(false).to eq(true
+          expect(false).to be_true
         end
       end
       """
