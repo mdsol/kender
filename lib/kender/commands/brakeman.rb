@@ -2,7 +2,7 @@ module Kender
   class Brakeman < Command
 
     def available?
-      in_gemfile?('brakeman')
+      Gemfile.contains?('brakeman')
     end
 
     def command

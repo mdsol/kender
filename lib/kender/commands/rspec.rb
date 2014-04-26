@@ -5,7 +5,7 @@ module Kender
       # do not run if running shamus
       return false if ENV['VALIDATE_PROJECT']
 
-      in_gemfile?("rspec") || in_gemfile?("rspec-rails")
+      Gemfile.contains?("rspec") || Gemfile.contains?("rspec-rails")
     end
 
     def command
