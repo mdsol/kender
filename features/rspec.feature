@@ -1,5 +1,4 @@
 @redo_bundle
-@announce
 Feature: Rspec
   Kender is able to run specs using the rspec tool.
 
