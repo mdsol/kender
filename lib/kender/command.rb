@@ -1,5 +1,3 @@
-require_relative 'gemfile' # helper methods related to the gemfile of the project
-
 module Kender
   # This class abstracts the shell commands we use
   class Command
