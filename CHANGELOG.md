@@ -1,6 +1,9 @@
 # 0.2.2
 * Adds support for i18n-tasks gem.
 
+# 0.2.1
+* Add support for pb_numbers rake task to ensure all your scenarios are uniquely identified
+
 # 0.2
 * Kender do not create magic task per command. Avoid slowing down Rake.
 
