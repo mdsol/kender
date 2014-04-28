@@ -1,3 +1,6 @@
+# 0.2.1
+* Add support for pb_numbers rake task to ensure all your scenarios are uniquely identified
+
 # 0.2
 * Kender do not create magic task per command. Avoid slowing down Rake.
 
@@ -24,6 +27,3 @@
 
 # 0.1.1
 * Initial release
-
-# 0.2.1
-* Add support for pb_numbers rake task to ensure all your scenarios are uniquely identified
