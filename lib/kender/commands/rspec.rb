@@ -12,7 +12,7 @@ module Kender
       if defined?(ParallelTests)
         'bundle exec rake parallel:spec'
       else
-        'bundle exec rspec'
+        'bundle exec rspec --warnings'
       end
     end
 
