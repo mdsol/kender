@@ -2,7 +2,7 @@ module Kender
   class Rdlint < Command
 
     def available?
-      in_gemfile?('crichton') && File.exists?(File.join(Dir.pwd, 'api_descriptors'))
+      in_gemfile?('crichton') && Dir.exists?(File.join(Dir.pwd, 'api_descriptors'))
     end
 
     def command
