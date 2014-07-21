@@ -1,3 +1,6 @@
+# 0.2.3
+* Adds support for Crichton lint.
+
 # 0.2.2
 * Adds support for i18n-tasks gem.
 

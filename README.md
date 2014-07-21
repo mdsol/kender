@@ -176,6 +176,13 @@ rake VALIDATE_PROJECT=true ci
 
 [s]: https://github.com/mdsol/shamus
 
+#### Crichton Rdlint
+
+The [Crichton rdlint][cr] command is run.  If the command fails, the CI run will fail.
+If there is no api_descriptors directory in the project, the command will not be run.
+
+[cr]: https://github.com/mdsol/crichton/blob/develop/doc/lint.md
+
 ### Setting commit status in GitHub
 
 The `ci` task sets the status of the current `HEAD` commit in the associated
