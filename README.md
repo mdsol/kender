@@ -102,11 +102,18 @@ Currently supported gems are:
 
 #### Cucumber
 
-The [Cucumber][c] features will be run. No command-line parameters or switches
+The [Cucumber][c] features will be run. Normally no command-line parameters or switches
 are passed, so ensure your default profile is correct for a CI run. If the
 cucumber command fails, the CI run will fail.
 
+If you have flaky tests that fail intermittently, you can tell Kender to re-run
+failing cucumber tests as part of the CI run.  You will need to specify a profile
+named `rerun` in your cucumber.yml file.  You can then set the environment variable
+`CUCUMBER_RERUNS` to the number of additional times you wish to run cucumber with
+the rerun profile.  You can see an [example cucumber.yml file here][ce].
+
 [c]: https://github.com/cucumber/cucumber
+[ce]: cucumber_example.yml
 
 #### RSpec
 
@@ -130,9 +137,11 @@ the CI run.
 #### Brakeman
 
 The [Brakeman][b] command is run in quiet mode. If any warnings are generated,
-the CI run will fail.
+the CI run will fail.  Brakeman can be customized by using a local configuration
+file, see the [brakeman documentation][bd] for details.
   
 [b]: http://brakemanscanner.org/
+[bd]: https://github.com/presidentbeef/brakeman#configuration-files
 
 #### Bundler Audit
 
