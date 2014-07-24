@@ -5,8 +5,8 @@ Gem::Specification.new do |s|
   s.version = Kender::VERSION
   s.platform = Gem::Platform::RUBY
 
-  s.authors = ['Andrew Smith', 'Jordi Polo', 'Ezra Jennings']
-  s.email = ['asmith@mdsol.com', 'jcarres@mdsol.com', 'ejennings@mdsol.com']
+  s.authors = ['Andrew Smith', 'Jordi Polo', 'Michael West', 'Ezra Jennings']
+  s.email = ['asmith@mdsol.com', 'jcarres@mdsol.com', 'mwest@mdsol.com', 'ejennings@mdsol.com']
   s.summary = 'Kender is a library of rake tasks that provides a consistent framework for continuous integration (CI).'
   s.license = 'MIT'
 

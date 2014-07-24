@@ -248,5 +248,5 @@ export GITHUB_REMOTE=`echo "$GIT_BRANCH" | awk -F / '{print $1}'`
 * [Jordi Carres](https://github.com/jcarres-mdsol)
 * [Mathieu Jobin](https://github.com/mjobin-mdsol)
 * [Will Duty](https://github.com/wdutymdsol)
+* [Michael West](https://github.com/miwest929)
 * [Ezra Jennings](https://github.com/ejennings-mdsol)
-
