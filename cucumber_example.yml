@@ -1,0 +1,18 @@
+# The rerun profile looks for a file named rerun.txt, and if it does not find it, runs all of the
+# scenarios in the features directory.  It then outputs any failing tests to rerun.txt.  If rerun.txt
+# already exists, it runs only those tests specified in the file.  If the file is empty, no tests
+# are run and cucumber returns success.
+
+<%
+skip_tags = "--tags ~@DRAFT --tags ~@wip"
+std_opts = "-r features/ --format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} --strict #{skip_tags}"
+rerun_opts = if File.file?('rerun.txt')
+  rerun = IO.read('rerun.txt')
+  rerun.to_s.strip.empty? ? "#{std_opts} --tags @none_so_will_pass" : "#{std_opts} #{rerun}"
+else
+  "#{std_opts} features"
+end
+%>
+default: <%= std_opts %> features
+wip: --tags @wip:3 --wip features
+rerun: --format rerun --out rerun.txt <%= rerun_opts %>
