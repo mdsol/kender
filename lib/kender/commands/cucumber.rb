@@ -8,6 +8,8 @@ module Kender
     def command
       if defined?(ParallelTests)
         'bundle exec rake parallel:features'
+      elsif ENV['HEADED_BROWSER']
+        "HEADED_BROWSER=#{ENV['HEADED_BROWSER']} bundle exec cucumber"
       else
         'bundle exec cucumber'
       end
