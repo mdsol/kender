@@ -1,3 +1,6 @@
+# 0.2.4
+* Adds support for running with the headed_browser env variable
+
 # 0.2.3
 * Adds support for Crichton lint.
 
