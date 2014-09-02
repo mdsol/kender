@@ -43,7 +43,7 @@ module Kender
     private
 
     def in_gemfile?(gem_name)
-      Bundler.definition.specs.any?{ |spec| spec.name == gem_name }
+      Bundler.definition.dependencies.any?{ |dep| dep.name == gem_name }
     end
 
   end
