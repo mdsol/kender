@@ -1,3 +1,4 @@
+@redo_bundle
 Feature: Scenarios
   Kender is able to run scenarios using the cucumber tool.
 
@@ -6,6 +7,8 @@ Feature: Scenarios
       """
       source 'https://rubygems.org'
       gem 'cucumber', '~>1.3'
+      gem 'kender', path: '../../' # needed to use the latest code
+      gem 'dice_bag', '~>0.7'
       """
     And I run `bundle install`
 
