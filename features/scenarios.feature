@@ -13,7 +13,7 @@ Feature: Scenarios
     And I run `bundle install`
 
   Scenario: The project has no scenarios to run but cucumber is executed
-    When I run `rake ci`
+    When I run `bundle exec rake ci`
     Then it should pass with:
     """
     0 scenarios
@@ -27,7 +27,7 @@ Feature: Scenarios
       This is a test of my product
       Scenario: first test
       """
-    When I run `rake ci`
+    When I run `bundle exec rake ci`
     Then it should pass with:
     """
     1 scenario (1 passed)
@@ -48,5 +48,5 @@ Feature: Scenarios
         raise 'failed'
       end
       """
-    When I run `rake ci`
+    When I run `bundle exec rake ci`
     Then the exit status should not be 0
