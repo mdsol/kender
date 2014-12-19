@@ -1,3 +1,6 @@
+# 0.2.6
+* Updated to check for cucumber-rails in addition to cucumber
+
 # 0.2.5
 * Updated to only check for gems explicitly declared in Gemfile
 
