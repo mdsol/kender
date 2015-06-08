@@ -5,6 +5,7 @@
   without dice_bag so not need of supporting the ability of doing so.
   It is a backwards-incompatible change for those using their own
 config:all rake task.
+* Kender needs Ruby 1.9.3 or superior
 
 # 0.2.6
 * Updated to check for cucumber-rails in addition to cucumber
