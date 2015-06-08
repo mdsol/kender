@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.executables = Dir['bin/*'].map{ |f| File.basename(f) }
   s.require_paths = ['lib']
 
-  s.add_dependency 'bundler', '~> 0'
+  s.add_dependency 'bundler'
   s.add_dependency 'dice_bag', '~> 0.8'
   s.add_development_dependency 'aruba', '~> 0.5'
   s.add_development_dependency 'rake', '~> 0'
