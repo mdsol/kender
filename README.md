@@ -96,9 +96,14 @@ Currently supported gems are:
 
 #### Cucumber
 
-The [Cucumber][c] features will be run. No command-line parameters or switches
+The [Cucumber][c] features will be run. Normally no command-line parameters or switches
 are passed, so ensure your default profile is correct for a CI run. If the
 cucumber command fails, the CI run will fail.
+
+If you want to run scenarios that require a headed web browser, you can tell Kender
+to use a specific browser as part of the CI run. You can set the environment
+variable `HEADED_BROWSER` to the name of the browser you want to run. Verify your project
+can use the `HEADED_BROWSER` environment variable.
 
 [c]: https://github.com/cucumber/cucumber
 
@@ -170,6 +175,13 @@ rake VALIDATE_PROJECT=true ci
 
 [s]: https://github.com/mdsol/shamus
 
+#### Crichton Rdlint
+
+The [Crichton rdlint][cr] command is run.  If the command fails, the CI run will fail.
+If there is no api_descriptors directory in the project, the command will not be run.
+
+[cr]: https://github.com/mdsol/crichton/blob/develop/doc/lint.md
+
 ### Setting commit status in GitHub
 
 The `ci` task sets the status of the current `HEAD` commit in the associated
@@ -235,4 +247,5 @@ export GITHUB_REMOTE=`echo "$GIT_BRANCH" | awk -F / '{print $1}'`
 * [Jordi Carres](https://github.com/jcarres-mdsol)
 * [Mathieu Jobin](https://github.com/mjobin-mdsol)
 * [Will Duty](https://github.com/wdutymdsol)
-
+* [Michael West](https://github.com/miwest929)
+* [Ezra Jennings](https://github.com/ejennings-mdsol)

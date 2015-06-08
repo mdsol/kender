@@ -43,7 +43,7 @@ module Kender
     private
 
     def in_gemfile?(gem_name)
-      Bundler.definition.specs.any?{ |spec| spec.name == gem_name }
+      Bundler.definition.dependencies.any?{ |dep| dep.name == gem_name }
     end
 
   end
@@ -60,3 +60,4 @@ require_relative 'commands/cucumber'
 require_relative 'commands/reek'
 require_relative 'commands/i18n_tasks'
 require_relative 'commands/pb_duplicates'
+require_relative 'commands/rdlint'

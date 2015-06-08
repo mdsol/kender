@@ -6,6 +6,18 @@
   It is a backwards-incompatible change for those using their own
 config:all rake task.
 
+# 0.2.6
+* Updated to check for cucumber-rails in addition to cucumber
+
+# 0.2.5
+* Updated to only check for gems explicitly declared in Gemfile
+
+# 0.2.4
+* Adds support for running with the headed_browser env variable
+
+# 0.2.3
+* Adds support for Crichton lint.
+
 # 0.2.2
 * Adds support for i18n-tasks gem.
 
