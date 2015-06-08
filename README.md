@@ -27,7 +27,7 @@ Add the following to your `Gemfile`:
 
 ```ruby
 group :development, :test do
-  gem 'kender', :git => 'git@github.com:mdsol/kender.git'
+  gem 'kender', '~> 0.3'
 end
 ```
 
@@ -38,21 +38,15 @@ Kender-based CI runs are executed using the `ci` rake task. The following rake
 tasks defined locally in your project will be run at the appropriate point in
 the process if they exist:
 
-* `config:all`
+* `config:deploy`
 * `db:migrate`
 * `db:create`
 * `db:drop`
 
-To create `config:all` we strongly recommend you use Kender's companion
-[DiceBag][db] gem:
-
-```ruby
-gem 'dice_bag', '~> 0.7'
-```
+`config:deploy` is defined in the [DiceBag][db] gem.
+It will always overwrite the configuration files with the values in the templates.
 
 [db]: https://github.com/mdsol/dice_bag
-
-Unlike Kender, DiceBag is intended for use in all stages, including production.
 
 The `db` tasks are assumed to work like those found in Rails.
 
