@@ -1,3 +1,12 @@
+# 0.3.0
+* Use config:deploy instead of config:all rake task.
+  config:deploy will always overwrite every config file without asking.
+* Kender depends on dice_bag. Realistically probably noone was using it
+  without dice_bag so not need of supporting the ability of doing so.
+  It is a backwards-incompatible change for those using their own
+config:all rake task.
+* Kender needs Ruby 1.9.3 or superior
+
 # 0.2.6
 * Updated to check for cucumber-rails in addition to cucumber
 

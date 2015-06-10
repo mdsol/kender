@@ -29,7 +29,7 @@ end
 namespace :ci do
 
   # UI for the user, these are tasks the user can use
-  desc "Configure the app to run continuous integration tests"
+  desc "Configure the app to run continuous integration tests."
   task :config => ['ci:env', 'ci:config_project', 'ci:setup_db']
 
   desc "Run continuous integration tests with the current configuration"
@@ -63,7 +63,7 @@ namespace :ci do
   end
 
   task :config_project do
-    unless run_successfully?('config:all')
+    unless run_successfully?('config:deploy')
       puts 'Your project could not be configured, a config:all task needed. Consider installing dice_bag'
     end
   end
