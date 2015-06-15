@@ -1,3 +1,6 @@
+# 0.3.1
+* Allow Jasmine to run even when Jasmine-phantom is not in the Gemfile
+
 # 0.3.0
 * Use config:deploy instead of config:all rake task.
   config:deploy will always overwrite every config file without asking.
