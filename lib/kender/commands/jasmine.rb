@@ -8,9 +8,9 @@ module Kender
       return false if ENV['VALIDATE_PROJECT']
 
       # make sure those gems were added
-      return false unless in_gemfile?("jasmine") && in_gemfile?("jasmine-phantom")
+      return false unless in_gemfile?("jasmine")
 
-      # verify jasmine and phantomjs are present
+      # verify jasmine and phantomjs are both present
       `phantomjs --version 2>&1 > /dev/null`
       return false unless $?.success?
       `bundle exec jasmine license`
@@ -18,7 +18,12 @@ module Kender
     end
 
     def command
-      'bundle exec rake jasmine:phantom:ci'
+      if in_gemfile?("jasmine-phantom")
+        #This is nicer as will install phantomJS for us.
+        'bundle exec rake jasmine:phantom:ci'
+      else
+        'bundle exec rake jasmine:ci'
+      end
     end
 
   end
