@@ -6,7 +6,7 @@ module Kender
     end
 
     def command
-      'bundle exec factory_girl:lint'
+      'bundle exec rake factory_girl:lint'
     end
 
   end
