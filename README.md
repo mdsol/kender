@@ -181,7 +181,7 @@ rake VALIDATE_PROJECT=true ci
 The [FactoryGirl lint][fgl] command is run. If the command fails, the CI run will fail.
 If there is no `factory_girl_lint.rake` file in the `lib/tasks` directory of the project, the command will not be run.
 
-[fgcl]: https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md#linting-factories
+[fgl]: https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md#linting-factories
 
 ### Setting commit status in GitHub
 
