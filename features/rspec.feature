@@ -9,7 +9,7 @@ Feature: Rspec
       gem 'kender', path: '../../' # needed to use the latest code
       gem 'dice_bag', '~>0.7'
       """
-    And I set the environment variable "BUNDLE_GEMFILE" to "Gemfile"
+    And I set the environment variable "BUNDLE_GEMFILE" to "./Gemfile"
     And I successfully run `bundle install`
 
   Scenario: The project has no specs but Rspec is executed
