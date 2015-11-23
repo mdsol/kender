@@ -182,6 +182,13 @@ If there is no api_descriptors directory in the project, the command will not be
 
 [cr]: https://github.com/mdsol/crichton/blob/develop/doc/lint.md
 
+#### FactoryGirl Lint
+
+The [FactoryGirl lint][fgl] command is run. If the command fails, the CI run will fail.
+If there is no `factory_girl_lint.rake` file in the `lib/tasks` directory of the project, the command will not be run.
+
+[fgl]: https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md#linting-factories
+
 ### Setting commit status in GitHub
 
 The `ci` task sets the status of the current `HEAD` commit in the associated

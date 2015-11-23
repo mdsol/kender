@@ -1,3 +1,6 @@
+# 0.3.2
+* Run the factory_girl:lint task if it is available
+
 # 0.3.1
 * Allow Jasmine to run even when Jasmine-phantom is not in the Gemfile
 
