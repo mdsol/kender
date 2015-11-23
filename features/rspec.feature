@@ -1,4 +1,3 @@
-@redo_bundle
 Feature: Rspec
   Kender is able to run specs using the rspec tool.
 
@@ -10,7 +9,8 @@ Feature: Rspec
       gem 'kender', path: '../../' # needed to use the latest code
       gem 'dice_bag', '~>0.7'
       """
-    And I run `bundle install`
+    And I set the environment variable "BUNDLE_GEMFILE" to "Gemfile"
+    And I successfully run `bundle install`
 
   Scenario: The project has no specs but Rspec is executed
     When I run `bundle exec rake ci`

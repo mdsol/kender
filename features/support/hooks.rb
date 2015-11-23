@@ -1,5 +1,5 @@
 Before do
   write_file("Rakefile", "require 'kender/tasks'")
-  create_dir('features')
-  create_dir('spec')
+  create_directory('features')
+  create_directory('spec')
 end
