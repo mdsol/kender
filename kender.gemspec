@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_dependency 'bundler'
-  s.add_dependency 'dice_bag', '~> 0.8'
+  s.add_dependency 'dice_bag', '>= 0.9', '< 2.0'
   s.add_development_dependency 'aruba', '~> 0.5'
   s.add_development_dependency 'rake', '~> 0'
 end

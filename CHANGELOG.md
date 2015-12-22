@@ -1,3 +1,6 @@
+# 0.3.3
+* Allow dice_bag 1.x as a dependency
+
 # 0.3.2
 * Run the factory_girl:lint task if it is available
 
