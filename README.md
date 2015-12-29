@@ -248,6 +248,16 @@ export GITHUB_REMOTE=`echo "$GIT_BRANCH" | awk -F / '{print $1}'`
 
 [je]: https://wiki.jenkins-ci.org/display/JENKINS/Building+a+software+project#Buildingasoftwareproject-JenkinsSetEnvironmentVariables
 
+
+## Development
+
+Tests are run with:
+```bash
+bundle exec cucumber
+```
+
+They need a modern bundler ( > 1.10) to work.
+
 ## Contributors
 
 * [Andrew Smith](https://github.com/asmith-mdsol)

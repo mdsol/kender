@@ -1,4 +1,3 @@
-@redo_bundle
 Feature: Scenarios
   Kender is able to run scenarios using the cucumber tool.
 
@@ -9,8 +8,10 @@ Feature: Scenarios
       gem 'cucumber', '~>1.3'
       gem 'kender', path: '../../' # needed to use the latest code
       gem 'dice_bag', '~>0.7'
+      gem 'aruba', '~>0.10'
       """
-    And I run `bundle install`
+    And I set the environment variable "BUNDLE_GEMFILE" to "Gemfile"
+    And I successfully run `bundle install`
 
   Scenario: The project has no scenarios to run but cucumber is executed
     When I run `bundle exec rake ci`
