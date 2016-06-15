@@ -1,3 +1,6 @@
+# 0.4.0
+* Use db:schema:load instead of db:migrate which was causing schema changes in some projects
+
 # 0.3.3
 * Allow dice_bag 1.x as a dependency
 

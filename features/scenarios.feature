@@ -6,11 +6,13 @@ Feature: Scenarios
     Given a file named "Gemfile" with:
       """
       source 'https://rubygems.org'
-      gem 'cucumber', '~>1.3'
+      gem 'cucumber', '~> 1.3'
       gem 'kender', path: '../../' # needed to use the latest code
-      gem 'dice_bag', '~>0.7'
+      gem 'dice_bag', '~> 0.7'
       """
-    And I run `bundle install`
+    # Running this twice because sometimes the install command will timeout.
+    And I run `bundle install --path vendor/ --jobs=4`
+    And I run `bundle install --path vendor/ --jobs=4`
 
   Scenario: The project has no scenarios to run but cucumber is executed
     When I run `bundle exec rake ci`

@@ -8,9 +8,9 @@ Feature: Rspec
       source 'https://rubygems.org'
       gem 'rspec', '~> 2.14'
       gem 'kender', path: '../../' # needed to use the latest code
-      gem 'dice_bag', '~>0.7'
+      gem 'dice_bag', '~> 0.7'
       """
-    And I run `bundle install`
+    And I run `bundle install --path vendor/`
 
   Scenario: The project has no specs but Rspec is executed
     When I run `bundle exec rake ci`
