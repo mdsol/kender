@@ -1,9 +1,9 @@
 require 'aruba/cucumber'
 require 'kender'
 
-Before do
-  #scenarios bundle to set up gems and it takes forever
-    @aruba_timeout_seconds = 30
+# scenarios bundle to set up gems and it takes forever
+Aruba.configure do |config|
+  config.startup_wait_time = 12
 end
 
 # Unset bundle vars so when we create new bundle files in the scenarios 
