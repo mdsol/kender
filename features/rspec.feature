@@ -8,7 +8,7 @@ Feature: Rspec
       source 'https://rubygems.org'
       gem 'rspec', '~> 2.14'
       gem 'kender', path: '../../' # needed to use the latest code
-      gem 'dice_bag', '~> 0.7'
+      gem 'dice_bag', '~> 1.0'
       """
     And I run `bundle install --path vendor/`
 

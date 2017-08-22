@@ -8,7 +8,7 @@ Feature: Scenarios
       source 'https://rubygems.org'
       gem 'cucumber', '~> 1.3'
       gem 'kender', path: '../../' # needed to use the latest code
-      gem 'dice_bag', '~> 0.7'
+      gem 'dice_bag', '~> 1.0'
       """
     # Running this twice because sometimes the install command will timeout.
     And I run `bundle install --path vendor/ --jobs=4`
