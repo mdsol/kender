@@ -1,5 +1,6 @@
 # 0.5.0
 * Removes functionality regarding Github
+* Adds ci:fail_fast task to allow CI to finish at the first failure
 
 # 0.4.0
 * Use db:schema:load instead of db:migrate which was causing schema changes in some projects

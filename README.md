@@ -19,8 +19,7 @@ principles of Kender are:
   project configuration.
 
 
-The main benefit of Kender is that run all the test related software by default.
-
+The main benefit of Kender is that all test related software (e.g. Cucumber, RSpec, etc.) is run by default.
 
 ## Usage
 
