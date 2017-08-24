@@ -1,5 +1,4 @@
 require 'kender/configuration'
-require 'kender/github'
 require 'kender/command'
 
 # Helper method to call rake tasks without blowing up when they do not exists
@@ -12,15 +11,10 @@ end
 
 # This is the task we want the user to use all the time.
 desc "Configure and run continuous integration tests then clean up"
-task :ci => ['ci:status:pending'] do
+task :ci do
   begin
     Rake::Task["ci:config"].invoke
-    Rake::Task["ci:run"].invoke
-    Rake::Task["ci:status:success"].invoke
-  rescue Exception => e
-    Rake::Task["ci:status:failure"].invoke
-    # Ensure that this task still fails.
-    raise e
+    Rake::Task["ci:fail_fast"].invoke
   ensure
     Rake::Task["ci:clean"].invoke
   end
@@ -32,13 +26,31 @@ namespace :ci do
   desc "Configure the app to run continuous integration tests."
   task :config => ['ci:env', 'ci:config_project', 'ci:setup_db']
 
-  desc "Run continuous integration tests with the current configuration"
-  task :run =>  ['ci:env'] do
+  desc "Run continuous integration tests and aborts when one suite fails"
+  task :fail_fast =>  ['ci:env', 'ci:list'] do
+    #make sure we require all the tools we need loaded in memory
+    Kender::Command.all.each do |command|
+      command.execute
+      abort "#{command.name} failed" unless command.success
+    end
+  end
+
+
+  desc "Run all continuous integration tests and reports a list of failed suites at the end."
+  task :run =>  ['ci:env', 'ci:list'] do
     #make sure we require all the tools we need loaded in memory
     Kender::Command.all.each do |command|
       command.execute
     end
+    # Nice summary of failures at the end of the run.
+    Kender::Command.all.each do |command|
+      puts "#{command.name} failed" unless command.success
+    end
+    abort "Command failed: #{command}" unless Kender::Command.all_success?
   end
+
+
+
 
   desc "Destroy resources created externally for the continuous integration run, e.g. drops databases"
   task :clean => ['ci:env', 'ci:drop_db']
@@ -106,18 +118,4 @@ namespace :ci do
     end
   end
 
-  namespace :status do
-
-    config = Kender::Configuration.new
-
-    task :pending do
-      Kender::GitHub.update_commit_status(:pending, config)
-    end
-    task :success do
-      Kender::GitHub.update_commit_status(:success, config)
-    end
-    task :failure do
-      Kender::GitHub.update_commit_status(:failure, config)
-    end
-  end
 end

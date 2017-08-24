@@ -18,8 +18,8 @@ principles of Kender are:
   on the CI server due to branch changes being incompatible with the current CI
   project configuration.
 
-* CI runs have directly visible status, e.g. in the GitHub pull requests. No
-  more merging bad branches.
+
+The main benefit of Kender is that all test related software (e.g. Cucumber, RSpec, etc.) is run by default.
 
 ## Usage
 
@@ -27,16 +27,32 @@ Add the following to your `Gemfile`:
 
 ```ruby
 group :development, :test do
-  gem 'kender', '~> 0.3'
+  gem 'kender', '~> 0.5'
 end
 ```
 
-This gem and its dependencies should not be deployed in production, hence the
-`group` above.
+This gem and its dependencies should not be used in production, hence the `group` above.
 
-Kender-based CI runs are executed using the `ci` rake task. The following rake
-tasks defined locally in your project will be run at the appropriate point in
-the process if they exist:
+
+### Configuring and running
+
+The rake `ci` task can be run locally in precisely the same way as it should be on a CI server:
+
+```
+rake ci
+```
+
+This executes the three sub-tasks `ci:config`, `ci:run` and `ci:clean`. Each of these can be run in isolation.
+
+Configuration typically requires values to be provided. Using dice_bag, this can
+be done through environment variables which can be passed in the same command line. For example:
+
+```
+DATABASE_USERNAME=root DATABASE_PASSWORD=password DATABASE_NAME=test rake ci
+```
+
+The `ci:config` rake task creates a DB and configures the project.
+It will execute the following tasks if they are defined:
 
 * `config:deploy`
 * `db:migrate`
@@ -50,6 +66,21 @@ It will always overwrite the configuration files with the values in the template
 
 The `db` tasks are assumed to work like those found in Rails.
 
+Run the following command to see the new tasks:
+
+```
+[bundle exec] rake -D ci
+```
+
+
+### Running the tests without configuration
+
+To bypass any configuration and clean-up side effects, for example if your
+application is already configured, execute just the `ci:run` task.
+
+
+### Non-Rails environments
+
 If you are using these Kender tasks outside of a Rails project, add the following to
 your `Rakefile` or wherever your local rake tasks are defined:
 
@@ -57,40 +88,13 @@ your `Rakefile` or wherever your local rake tasks are defined:
 require 'kender/tasks'
 ```
 
-Run the following command to see the new tasks:
-
-```
-[bundle exec] rake -D ci
-```
-
-### Execute a CI run
-
-The rake `ci` task can be run locally in precisely the same way as it should be
-on a CI server:
-
-```
-rake ci
-```
-
-This executes the three sub-tasks `ci:config`, `ci:run` and `ci:clean`. Each of
-these can be run in isolation.
-
-Configuration typically requires values to be provided. Using DiceBag, this can
-be done through environment variables passed on the rake command line. For
-example, in a typical Rails project you would use the following:
-
-```
-rake DATABASE_USERNAME=root DATABASE_PASSWORD=password DATABASE_NAME=test ci
-```
-
-To bypass any configuration and clean-up side effects, for example if your
-application is already configured, execute just the `ci:run` task.
 
 ### Configuring what is included in the CI run
 
 Kender will detect the test-related gems in your Gemfile and execute whatever
 CI-related commands make sense. Just ensure the gem is available in at least
 your test and development environments.
+
 
 Currently supported gems are:
 
@@ -130,7 +134,7 @@ the CI run.
 
 The [Brakeman][b] command is run in quiet mode. If any warnings are generated,
 the CI run will fail.
-  
+
 [b]: http://brakemanscanner.org/
 
 #### Bundler Audit
@@ -189,64 +193,7 @@ If there is no `factory_girl_lint.rake` file in the `lib/tasks` directory of the
 
 [fgl]: https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md#linting-factories
 
-### Setting commit status in GitHub
 
-The `ci` task sets the status of the current `HEAD` commit in the associated
-GitHub repository. If this commit represents a topic (feature) branch, any
-associated pull request will show the status of the CI run.
-
-The GitHub repository is determined by examining the `origin` remote of the
-current git repository.
-
-To set the commit status, a [GitHub OAuth][go] authorization token is required
-and must be provided in the `GITHUB_AUTH_TOKEN` environment variable, for
-example:
-
-```
-[bundle exec] rake GITHUB_AUTH_TOKEN=123... ci
-```
-
-[go]: http://developer.github.com/v3/oauth/
-
-CI servers like Jenkins let you set system-wide environment variables, saving
-the need of specifying this in every job.
-
-Create an authorization token with the following command:
-
-```
-curl -u <username> -d '{"scopes":["repo:status"],"note":"CI status updater"}' https://api.github.com/authorizations
-```
-
-You will be prompted for your GitHub account password.
-
-The token is restricted to creating commit statuses only. The token is
-associated to the given user, as are any commit statuses created through it. The
-note given is the display name used in the GitHub account management pages.
-Tokens can be revoked from there or via the API.
-
-The commit status created uses the `BUILD_NUMBER` and `BUILD_URL` environment
-variables as [provided by Jenkins][je]. Alternatively, these can be provided or
-overridden on the command line, for example:
-
-```
-[bundle exec] rake BUILD_NUMBER=$MY_BUILD_NUM BUILD_URL=http://example.com/url ci
-```
-
-If you are using multiple remotes, you may specify one with the environment
-variable `GITHUB_REMOTE`:
-
-```
-[bundle exec] rake GITHUB_REMOTE=personal ci
-```
-
-if you are using Jenkins with multiple remotes, you may want to have it automatically select the right
-one for you. Here is a quick bash trick you can use.
-
-```bash
-export GITHUB_REMOTE=`echo "$GIT_BRANCH" | awk -F / '{print $1}'`
-```
-
-[je]: https://wiki.jenkins-ci.org/display/JENKINS/Building+a+software+project#Buildingasoftwareproject-JenkinsSetEnvironmentVariables
 
 ## Contributors
 

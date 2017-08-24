@@ -1,6 +1,7 @@
 module Kender
   # This class abstracts the shell commands we use
   class Command
+    attr_reader :success
 
     def name
       self.class.name.split("::").last.downcase.to_sym
@@ -11,7 +12,7 @@ module Kender
     end
 
     def execute
-      abort "Command failed: #{command}" unless run.success?
+      @success = run.success?
     end
 
     #TODO: system reload all the gems again, avoid this.
@@ -21,6 +22,10 @@ module Kender
     end
 
     class << self
+
+      def all_success?
+        all.inject(true) {|all_result, command_result| all_result && command_result }
+      end
 
       def commands
         @commands ||= []
@@ -35,7 +40,17 @@ module Kender
       end
 
       def all
-        @all ||= commands.select(&:available?)
+        @all ||= begin
+          all_commands = commands.select(&:available?)
+          # move rspec and cucumber to last places so faster tools run first
+          if command = all_commands.find{ |command| command.name == :rspec }
+            all_commands.delete_if{ |command| command.name == :rspec }.push(command)
+          end
+           if command = all_commands.find{ |command| command.name == :cucumber }
+            all_commands.delete_if{ |command| command.name == :cucumber }.push(command)
+          end
+          all_commands
+        end
       end
 
     end
