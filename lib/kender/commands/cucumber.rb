@@ -7,7 +7,9 @@ module Kender
 
     def command
       extra_env = ENV['HEADED_BROWSER'] ? "HEADED_BROWSER=#{ENV['HEADED_BROWSER']}" : ''
-      if defined?(ParallelTests)
+      if defined?(Knapsack)
+        "#{extra_env} bundle exec rake knapsack:cucumber"
+      elsif defined?(ParallelTests)
         "#{extra_env} bundle exec rake parallel:features"
       else
         "#{extra_env} bundle exec cucumber"

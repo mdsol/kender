@@ -1,3 +1,6 @@
+# 0.6.0
+* knapsack support (https://github.com/ArturT/knapsack)
+
 # 0.5.0
 * Removes functionality regarding Github
 * Adds ci:fail_fast task to allow CI to finish at the first failure
