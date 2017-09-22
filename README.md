@@ -109,6 +109,13 @@ to use a specific browser as part of the CI run. You can set the environment
 variable `HEADED_BROWSER` to the name of the browser you want to run. Verify your project
 can use the `HEADED_BROWSER` environment variable.
 
+Cucumber scenarios can be spread across multiple nodes by using using the following gems:
+- [knapsack](https://github.com/ArturT/knapsack)
+  - The following environment variables must be accessible when using travis-ci:
+    - CI_NODE_TOTAL
+    - CI_NODE_INDEX
+- [parallel_tests](https://github.com/grosser/parallel_tests)
+
 [c]: https://github.com/cucumber/cucumber
 
 #### RSpec
