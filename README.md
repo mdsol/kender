@@ -124,6 +124,12 @@ The [RSpec][r] specs will be run. No command-line parameters or switches are
 passed, so ensure your defaults in `.rspec` are correct for a CI run. If the
 rspec command fails, the CI run will fail.
 
+Rspecs can be spread across multiple nodes by using using the following gems:
+- [knapsack](https://github.com/ArturT/knapsack)
+  - The following environment variables must be accessible when using travis-ci:
+    - CI_NODE_TOTAL
+    - CI_NODE_INDEX
+
 [r]: https://github.com/rspec/rspec
 
 #### Jasmine

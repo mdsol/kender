@@ -1,5 +1,5 @@
 # 0.6.0
-* knapsack support for cucumber (https://github.com/ArturT/knapsack)
+* knapsack support for cucumber and rspec (https://github.com/ArturT/knapsack)
 
 # 0.5.0
 * Removes functionality regarding Github
