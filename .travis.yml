@@ -1,7 +1,13 @@
 language: ruby
 script: bundle exec cucumber
 rvm:
-  - 2.0.0
-  - 2.1.10
-  - 2.2.5
-  - 2.3.1
+- 2.2.5
+- 2.3.1
+- 2.4.2
+
+deploy:
+  provider: rubygems
+  api_key:
+    secure: QZG6pQmgoKlE4TI7SkCp87HdUL1s+47YpQiCldkG23Xef4jVkEk1GzsFLJnaBhOoExPDhRhog/rEN+pzcSNmx+3W0AZwy/Z5YQ2VNn9ojd8hhCTx4uXO1iagMXfavZvF+olzHJ6PRD9MzqHIm+MU1xFI8x5QqDrGY4XVSK/DyQw=
+  on:
+    tags: true
