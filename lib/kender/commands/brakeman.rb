@@ -5,8 +5,11 @@ module Kender
       in_gemfile?('brakeman')
     end
 
-    def command
-      'bundle exec brakeman --quiet --exit-on-warn'
+    def execute
+      require 'brakeman'
+
+      result = ::Brakeman.run(app_path: '.', print_report: true, quiet: true)
+      @success = result.errors.none? && result.warnings.none?
     end
 
   end
