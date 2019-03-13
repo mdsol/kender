@@ -14,3 +14,5 @@ deploy:
     secure: QZG6pQmgoKlE4TI7SkCp87HdUL1s+47YpQiCldkG23Xef4jVkEk1GzsFLJnaBhOoExPDhRhog/rEN+pzcSNmx+3W0AZwy/Z5YQ2VNn9ojd8hhCTx4uXO1iagMXfavZvF+olzHJ6PRD9MzqHIm+MU1xFI8x5QqDrGY4XVSK/DyQw=
   on:
     tags: true
+    repo: mdsol/kender
+    condition: "$TRAVIS_RUBY_VERSION == 2.6.1"
