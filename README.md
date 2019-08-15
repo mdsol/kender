@@ -164,6 +164,12 @@ of the output.
 
 [r]: https://github.com/troessner/reek
 
+#### Rubocop
+
+The [Rubocop][rc] command is run. If any checks fail, the CI run will fail.
+
+[rc]: https://github.com/rubocop-hq/rubocop
+
 #### Consistency Fail
 
 The [Consistency Fail][cf] command is run. The CI run will not fail, regardless

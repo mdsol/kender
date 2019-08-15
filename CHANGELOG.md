@@ -1,3 +1,6 @@
+# 0.7.0
+* Adds support for rubocop gem.
+
 # 0.6.0
 * knapsack support for cucumber and rspec (https://github.com/ArturT/knapsack)
 
