@@ -1,3 +1,6 @@
+# 0.7.0
+* Run brakeman in the same ruby process
+
 # 0.6.0
 * knapsack support for cucumber and rspec (https://github.com/ArturT/knapsack)
 
