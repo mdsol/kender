@@ -83,13 +83,15 @@ namespace :ci do
   task :setup_db do
     if Rake::Task.task_defined?('db:create')
       if !defined?(ParallelTests)
-        # Use db:schema:load instead of db:migrate because of this issue
-        # https://github.com/rails/rails/issues/19001
-        db_task = if File.exist?('db/schema.rb')
-          'db:schema:load'
-        else
-          'db:migrate'
-        end
+        db_task = if defined?(Rails) && Rails::VERSION::MAJOR < 5 && File.exist?('db/schema.rb')
+                    # Use db:schema:load instead of db:migrate for Rails 4
+                    # because of this issue
+                    # https://github.com/rails/rails/issues/19001
+                    'db:schema:load'
+                  else
+                    'db:migrate'
+                  end
+
         unless run_successfully?(['db:create', db_task])
           puts 'The DB could not be set up successfully.'
         end
