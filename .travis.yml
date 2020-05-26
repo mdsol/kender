@@ -1,10 +1,10 @@
+dist: bionic
 language: ruby
 
 rvm:
-  - 2.3.8
-  - 2.4.5
-  - 2.5.3
-  - 2.6.1
+  - 2.5
+  - 2.6
+  - 2.7
 
 script: bundle exec cucumber
 
@@ -15,4 +15,4 @@ deploy:
   on:
     tags: true
     repo: mdsol/kender
-    condition: "$TRAVIS_RUBY_VERSION == 2.6.1"
+    condition: $TRAVIS_RUBY_VERSION == 2.7
