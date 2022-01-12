@@ -24,7 +24,7 @@ module Kender
     class << self
 
       def all_success?
-        all.inject(true) {|all_result, command_result| all_result && command_result }
+        all.inject(true) {|all_result, command_result| all_result && command_result.success }
       end
 
       def commands

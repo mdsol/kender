@@ -33,6 +33,18 @@ Feature: Rspec
     """
     1 example, 0 failures
     """
+  
+  Scenario: A project with failing specs should fail when running the ci:run task
+    Given a file named "spec/testing_spec.rb" with:
+      """
+      describe "My software" do
+        it "fails miserably" do
+          expect(false).to be_true
+        end
+      end
+      """
+    When I run `bundle exec rake ci:run`
+    Then the exit status should not be 0
 
   Scenario: The project has some non passing specs to run
     Given a file named "spec/testing_spec.rb" with:
