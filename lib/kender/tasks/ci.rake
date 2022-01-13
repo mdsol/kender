@@ -46,7 +46,7 @@ namespace :ci do
     Kender::Command.all.each do |command|
       puts "#{command.name} failed" unless command.success
     end
-    abort "Command failed: #{command}" unless Kender::Command.all_success?
+    abort "Command(s) failed" unless Kender::Command.all_success?
   end
 
 
