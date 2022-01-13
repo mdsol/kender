@@ -1,3 +1,6 @@
+# 0.6.1
+* Fix for the ci:run task (when used individually) to abort after test failures.
+
 # 0.6.0
 * knapsack support for cucumber and rspec (https://github.com/ArturT/knapsack)
 
