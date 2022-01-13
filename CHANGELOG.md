@@ -1,3 +1,6 @@
+# 0.6.2
+* Prevent obscure error message (undefined method) when ci:run task aborts
+
 # 0.6.1
 * Fix for the ci:run task (when used individually) to abort after test failures.
 
