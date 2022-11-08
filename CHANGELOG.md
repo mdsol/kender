@@ -1,5 +1,6 @@
 # 0.7.0
 * Add support for Cypress-Rails gem.
+* Remove Crichton lint.
 
 # 0.6.2
 * Prevent obscure error message (undefined method) when ci:run task aborts
