@@ -206,6 +206,23 @@ If there is no `factory_girl_lint.rake` file in the `lib/tasks` directory of the
 
 [fgl]: https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md#linting-factories
 
+#### Cypress-Rails
+
+Your application should include the following task `rake cypress_extended:enhanced_run`
+which should call `rake cypress:run` from [Cypress-Rails][cypress].
+
+```ruby
+namespace :cypress_extended do
+  task enhanced_run: [:environment] do
+    # Do other stuff
+
+    # Run the Cypress-Rails task
+    Rake::Task['cypress:run'].invoke
+  end
+end
+```
+
+[cypress]: https://github.com/testdouble/cypress-rails
 
 
 ## Contributors
