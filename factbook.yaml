@@ -1,0 +1,23 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+spec:
+  type: library
+  lifecycle: production
+  owner: jcarres@mdsol.com
+metadata:
+  json_schema: https://github.com/mdsol/platform-standards/tree/master/schemas/v1alpha1.schema.json
+  name: kender
+  title: Kender
+  description: |-
+    Kender provides a consistent framework for continuous integration (CI).
+  teams:
+    - number: 248
+  people:
+    - role: architect
+      email: jcarres@mdsol.com
+  pipelines:
+    - url: https://travis-ci.org/github/mdsol/kender
+      role: Integration
+  annotations:
+    docs: https://github.com/mdsol/references/tree/develop/README
