@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.description = 'Kender is a library of rake tasks that provides a consistent framework for continuous integration (CI).'
   s.homepage = "https://github.com/mdsol/kender"
   s.license = 'MIT'
+  s.required_ruby_version = '>= 2.7.0'
 
   s.files = Dir['lib/**/*']
   s.test_files = Dir['features/**/*']
@@ -20,6 +21,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'bundler'
   s.add_dependency 'dice_bag', '>= 0.9', '< 2.0'
 
-  s.add_development_dependency 'aruba', '~> 1.0'
+  s.add_development_dependency 'aruba', '~> 2.0'
   s.add_development_dependency 'rake', '>= 13'
 end

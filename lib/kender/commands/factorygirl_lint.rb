@@ -2,7 +2,7 @@ module Kender
   class FactoryGirlLint < Command
 
     def available?
-      File.exists?(File.join(Dir.pwd, 'lib', 'tasks', 'factory_girl_lint.rake'))
+      File.exist?(File.join(Dir.pwd, 'lib', 'tasks', 'factory_girl_lint.rake'))
     end
 
     def command
