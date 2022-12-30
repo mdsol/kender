@@ -6,7 +6,7 @@ Feature: Rspec
     Given a file named "Gemfile" with:
       """
       source 'https://rubygems.org'
-      gem 'rspec', '~> 2.14'
+      gem 'rspec', '~> 3.0'
       gem 'kender', path: '../../' # needed to use the latest code
       gem 'dice_bag', '~> 1.0'
       """
@@ -33,7 +33,7 @@ Feature: Rspec
     """
     1 example, 0 failures
     """
-  
+
   Scenario: A project with failing specs should fail when running the ci:run task
     Given a file named "spec/testing_spec.rb" with:
       """

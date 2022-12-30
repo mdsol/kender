@@ -1,3 +1,6 @@
+# 0.8.0
+* Support Ruby 3.2 and drop support for < 2.7.
+
 # 0.7.0
 * Add support for Cypress-Rails gem.
 * Remove Crichton lint.
