@@ -75,9 +75,7 @@ namespace :ci do
   end
 
   task :config_project do
-    unless run_successfully?('config:deploy')
-      puts 'Your project could not be configured, a config:all task needed. Consider installing dice_bag'
-    end
+    Rake::Task['config:deploy'].invoke if Rake::Task.task_defined?('config:deploy')
   end
 
   task :setup_db do
