@@ -1,3 +1,6 @@
+# 0.9.0
+* Remove dice_bag dependency.
+
 # 0.8.0
 * Support Ruby 3.2 and drop support for < 2.7.
 
